@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>运单列表</title>
+  </head>
+  <body>
+    <div class="zl-page overflow-hide">
+      <div class="zl-page-top">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <form
+              action="#"
+              class="form-horizontal group-border-dashed layui-form"
+              layer-filter="searchBar"
+            >
+              <div class="zl-searchbar">
+                <div class="zl-search-input col-sm-12 col-md-11">
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label class="col-sm-5 col-md-5 control-label"
+                        >单据日期</label
+                      >
+                      <div class="col-sm-7 col-md-7 xs-pl-0 xs-pr-0">
+                        <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            readonly
+                            name="billDateStart"
+                            placeholder="请选择"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                        <div
+                          class="col-xs-2 xs-pl-0 xs-pr-0 text-center-important control-label"
+                        >
+                          ~
+                        </div>
+                        <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            readonly
+                            name="billDateEnd"
+                            placeholder="请选择"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label class="col-sm-5 col-md-5 control-label"
+                        >运单编号</label
+                      >
+                      <div class="col-sm-7 col-md-7">
+                        <input
+                          type="text"
+                          name="waybillCode"
+                          autocomplete="off"
+                          placeholder="请输入"
+                          class="form-control input-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label class="col-sm-5 col-md-5 control-label"
+                        >车牌号码</label
+                      >
+                      <div class="col-sm-7 col-md-7">
+                        <input
+                          type="text"
+                          name="plateNo"
+                          placeholder="请输入"
+                          class="form-control input-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="zl-searchBarMore" style="display: none;">
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >所属分公司</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select
+                            name="agencyId"
+                            class="form-control input-xs select2"
+                            lay-ignore
+                            id="agencyId"
+                          ></select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >所属项目</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select
+                            name="projectId"
+                            class="form-control input-xs select2"
+                            lay-ignore
+                            id="projectId"
+                          ></select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >项目类型</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select class="projectType" name="projectType">
+                            <option value="">全部</option>
+                            <option value="1">自营</option>
+                            <option value="2">无车承运</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >收货单位</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="receiveCorporationName"
+                            autocomplete="off"
+                            placeholder="请选择"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >司机姓名</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="driverName"
+                            autocomplete="off"
+                            placeholder="请选择"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >运输状态</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="transportStatus">
+                            <option value="">请选择</option>
+                            <option value="1">未开始</option>
+                            <option value="2">在途中</option>
+                            <option value="3">已完成</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >运单状态</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="auditStatus">
+                            <option value="">请选择</option>
+                            <option value="0">未提交</option>
+                            <option value="1">审批中</option>
+                            <option value="2">审批通过</option>
+                            <option value="4">审批驳回</option>
+                            <option value="5">已撤回</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >结算状态</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="settleStatus">
+                            <option value="">请选择</option>
+                            <option value="0">未结算</option>
+                            <option value="1">部分结算</option>
+                            <option value="2">已结算</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >收货地址</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="unloadAddress"
+                            autocomplete="off"
+                            placeholder="请选择"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >定位状态</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="locateStatus">
+                            <option value="">请选择</option>
+                            <option value="0">未设置</option>
+                            <option value="1">未开始</option>
+                            <option value="2">定位中</option>
+                            <option value="3">定位完成</option>
+                            <option value="4">定位完成前</option>
+                            <option value="5">无定位信息</option>
+                            <option value="6">已完成定位</option>
+                            <option value="7">车辆未入网</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >保单状态</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="policyStatus">
+                            <option value="">请选择</option>
+                            <option value="0">未投保</option>
+                            <option value="2">投保受理成功</option>
+                            <option value="3">投保受理失败</option>
+                            <option value="4">系统异常</option>
+                            <option value="5">投保成功</option>
+                            <option value="6">投保失败</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >运输协议</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="driverContractCode"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >收款人</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="receiptName"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >到达日期</label
+                        >
+                        <div class="col-sm-7 col-md-7 xs-pl-0 xs-pr-0">
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="arriveDateStart"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                          <div
+                            class="col-xs-2 xs-pl-0 xs-pr-0 text-center-important control-label"
+                          >
+                            ~
+                          </div>
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="arriveDateEnd"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >收款账号</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="receiptCard"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >装车时间</label
+                        >
+                        <div class="col-sm-7 col-md-7 xs-pl-0 xs-pr-0">
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="planDateStart"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                          <div
+                            class="col-xs-2 xs-pl-0 xs-pr-0 text-center-important control-label"
+                          >
+                            ~
+                          </div>
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="planDateEnd"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >发货联系人</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="shipperPerson"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >运单来源</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <select name="resource">
+                            <option value="">请选择</option>
+                            <option value="1">智联云iTMS</option>
+                            <option value="2">微信端助手</option>
+                            <option value="3">APP</option>
+                            <option value="4">敬业小程序</option>
+                            <option value="5">合作方</option>
+                            <option value="6">iTMS4.0小程序</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >创建人
+                        </label>
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="creatorName"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >创建时间</label
+                        >
+                        <div class="col-sm-7 col-md-7 xs-pl-0 xs-pr-0">
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="createDateStart"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                          <div
+                            class="col-xs-2 xs-pl-0 xs-pr-0 text-center-important control-label"
+                          >
+                            ~
+                          </div>
+                          <div class="col-xs-5 xs-pl-0 xs-pr-0">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              readonly
+                              name="createDateEnd"
+                              placeholder="请选择"
+                              class="form-control input-xs"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="form-group">
+                        <label class="col-sm-5 col-md-5 control-label"
+                          >运单备注</label
+                        >
+                        <div class="col-sm-7 col-md-7">
+                          <input
+                            type="text"
+                            name="remark"
+                            autocomplete="off"
+                            placeholder="请输入"
+                            class="form-control input-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="zl-search-btns clearfix">
+                  <div class="form-group text-center">
+                    <div class="btn-group" role="group">
+                      <button
+                        class="btn btn-primary"
+                        lay-submit
+                        lay-filter="formSubmit"
+                      >
+                        搜索
+                      </button>
+                      <button
+                        type="reset"
+                        class="btn btn-default search-reset-hook"
+                      >
+                        重置
+                      </button>
+                      <a class="btn text-muted searchBar-more-hook"
+                        >更多搜索项 <i class="icon mdi mdi-caret-down"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="zl-page-main">
+        <table id="table-main" lay-filter="table-main"></table>
+      </div>
+    </div>
+  </body>
+</html>

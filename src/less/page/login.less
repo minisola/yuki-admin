@@ -1,0 +1,99 @@
+body{
+  font-family: Tahoma, sans-serif !important;
+}
+.zl-page-login{
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  overflow-x: hidden;
+  background:url(/src/image/login_bg.jpg) no-repeat;
+  -webkit-background-size:cover;
+  background-size:cover;
+  background-position: center;
+  &:before{
+    content:"";
+    background:rgba(0,0,0,.35);
+    position: absolute;
+    top:0;
+    bottom:0;
+    height:100%;
+    width:100%;
+    left:0;
+    right:0;
+    z-index: 1;
+  }
+}
+.brand-info{
+  position: relative;
+  height: 100vh;
+  min-height: 540px;
+  padding:0 10%;
+  color:#fff;
+  dl{
+    width: 100%;
+    position: relative;
+    top:30%;
+    z-index: 3;
+  }
+  h1{
+    display: inline-block;
+    padding:0 20px;
+    margin:0;
+    line-height: 91px;
+  }
+  dt{
+    margin-bottom: 15px;
+  }
+  dd{
+    line-height: 2;
+    font-size: 18px;
+  }
+  dd:first-of-type{
+    font-size: 20px;
+    line-height: 3;
+  }
+  .brand{
+    height: 91px;
+    line-height: 91px;
+    min-width: 433px;
+    img{
+      width: 91px;
+      height: 91px;
+      vertical-align: top;
+    }
+  }
+}
+
+
+.login-box{
+  padding:0 40px;
+  background: #fff;
+  min-height: 540px;
+  height:100vh;
+  position: relative;
+  z-index: 3;
+  h2{
+    font-weight: normal;
+  }
+  &-tips{
+    color:#aaa;
+    line-height: 2;
+    font-size: 16px;
+  }
+
+}
+.login-form{
+  position: absolute;
+  left:40px;
+  right:40px;
+  top:45%;
+  margin-top: -260px;
+}
+@media screen and (max-height: 800px) {
+  .login-form{
+    margin-top: -200px;
+  }
+}

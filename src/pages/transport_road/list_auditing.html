@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/list_auditing.js"></script>
+    <title>公路运单查询</title>
+</head>
+<body>
+<div class="zl-page">
+    <div class="zl-page-top">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="#" class="form-horizontal group-border-dashed layui-form" layer-filter="searchBar">
+                    <div class="zl-searchbar">
+                        <div class="zl-search-input col-sm-12 col-md-11">
+                            <div class=" col-xs-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 col-md-5 control-label">车牌号码</label>
+                                    <div class="col-sm-7 col-md-7">
+                                        <input type="text" name="plateNo" placeholder="请输入"
+                                               class="form-control input-xs">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 col-md-5 control-label">所属分公司</label>
+                                    <div class="col-sm-7 col-md-7">
+                                        <select name="agencyId" class="form-control input-xs select2" lay-ignore
+                                                id="agencyId"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-xs-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 col-md-5 control-label">运单编号</label>
+                                    <div class="col-sm-7 col-md-7">
+                                        <input type="text" name="waybillCode"
+                                               autocomplete="off"
+                                               placeholder="请输入"
+                                               class="form-control input-xs">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="zl-searchBarMore" style="display: none;">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 col-md-5 control-label">所属项目</label>
+                                        <div class="col-sm-7 col-md-7">
+                                            <select name="projectId" class="form-control input-xs select2" lay-ignore
+                                                    id="projectId"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-xs-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 col-md-5 control-label">单据日期</label>
+                                        <div class="col-sm-7 col-md-7 xs-pl-0 xs-pr-0">
+                                            <div class="col-xs-5 xs-pl-0 xs-pr-0"><input type="text"
+                                                                                         autocomplete="off"
+                                                                                         readonly
+                                                                                         name="billDateStart" placeholder="请选择"
+                                                                                         class="form-control input-xs "></div>
+                                            <div class="col-xs-2 xs-pl-0 xs-pr-0 text-center-important control-label">
+                                                ~
+                                            </div>
+                                            <div class="col-xs-5 xs-pl-0 xs-pr-0"><input type="text"
+                                                                                         autocomplete="off"
+                                                                                         readonly
+                                                                                         name="billDateEnd" placeholder="请选择"
+                                                                                         class="form-control input-xs "></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                         <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="col-sm-5 col-md-5 control-label">运输协议</label>
+                                    <div class="col-sm-7 col-md-7">
+                                        <input type="text" name="driverContractCode"  autocomplete="off"
+                                               placeholder="请输入"
+                                               class="form-control input-xs">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 col-md-5 control-label">收款人</label>
+                                        <div class="col-sm-7 col-md-7">
+                                            <input type="text" name="receiptName"  autocomplete="off"
+                                                   placeholder="请输入"
+                                                   class="form-control input-xs">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 col-md-5 control-label">收款账号</label>
+                                        <div class="col-sm-7 col-md-7">
+                                            <input type="text" name="receiptCard"  autocomplete="off"
+                                                   placeholder="请输入"
+                                                   class="form-control input-xs">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-5 col-md-5 control-label">运单备注</label>
+                                        <div class="col-sm-7 col-md-7">
+                                            <input type="text" name="remark" autocomplete="off"
+                                            placeholder="请输入"
+                                            class="form-control input-xs">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="zl-search-btns clearfix">
+                            <div class="form-group text-center">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-primary" lay-submit lay-filter="formSubmit">搜索</button>
+                                    <button type="reset" class="btn btn-default search-reset-hook">重置</button>
+                                    <a class="btn text-muted searchBar-more-hook">更多搜索项 <i class="icon mdi mdi-caret-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="zl-page-main">
+        <table id="table-main" lay-filter="table-main">
+        </table>
+    </div>
+</div>
+</body>
+</html>
+
+

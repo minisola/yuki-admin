@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flexDate demo</title>
+    <link href="//cdn.bootcss.com/prettify/r298/prettify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/flexDate.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        body {
+            background-color: #f1f1f1;
+            font-size: 14px;
+            color: #666666;
+            font-family: '微软雅黑', Verdana, sans-serif, '宋体', serif;
+        }
+
+        .con {
+            width: 1200px;
+            border: 1px solid #dfdfdf;
+            background-color: #fff;
+            margin: 10px auto;
+            box-sizing: border-box;
+            padding: 20px 20px;
+            border-radius: 3px;
+        }
+
+        .head {
+            background-color: #f1f1f1;
+            padding: 8px 15px;
+            border-bottom: 1px solid #dfdfdf;
+            color: #ff8000;
+            font-size: 16px;
+        }
+
+        .block {
+            margin-top: 20px;
+            box-sizing: border-box;
+            border: 1px solid #dfdfdf;
+            border-top: 2px solid #ff8000;
+            opacity: 0;
+        }
+
+        .block:first-child {
+            margin-top: 0;
+        }
+
+        .code {
+            background-color: #ffffff;
+            border: none;
+            border-top: 1px solid #dfdfdf;
+            padding: 10px;
+            resize: none;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: '微软雅黑', Verdana, sans-serif, '宋体', serif;
+            font-size: 14px;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+
+        .textBox {
+            border: 1px solid #CCCCCC;
+            height: 30px;
+            line-height: 28px;
+            outline: none;
+            width: 250px;
+            color: #666666;
+            font-family: '微软雅黑', Verdana, sans-serif, '宋体', serif;
+            font-size: 14px;
+            text-indent: 10px;
+
+        }
+
+        .form {
+            padding: 15px;
+        }
+
+        .wrapper {
+            display: inline-block;
+            border: 1px solid #CCCCCC;
+        }
+
+        .wrapper > * {
+            vertical-align: top;
+        }
+
+        .wrapper > span {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: url(./images/date.png) no-repeat center center #f4f4f4;
+            border-left: 1px solid #CCCCCC;
+            cursor: pointer;
+        }
+
+        .wrapper > .textBox {
+            border: none;
+            width: 220px;
+        }
+
+        .btn {
+            padding: 5px 12px;
+            background-color: #f4f4f4;
+            color: #666666;
+            border: 1px solid #CCCCCC;
+            margin-left: 10px;
+        }
+
+        /*prettify*/
+        .code.prettyprint {
+            border: none;
+            border-top: 1px solid #dfdfdf;
+        }
+
+        ol.linenums {
+            margin-left: 40px;
+        }
+
+        ol.linenums li {
+            list-style-type: decimal;
+            background: #fff;
+            color: #2B91AF;
+            border-left: 1px solid #D1D7DC;
+            margin-left: 2px;
+            padding-left: 10px;
+        }
+
+        .str {
+            color: #b12424;
+        }
+
+        .code.prettyprint {
+            padding: 0 0 15px 0;
+        }
+
+        .prettyprint:before {
+            content: 'source code';
+            display: block;
+            height: 35px;
+            line-height: 33px;
+            border-bottom: 1px solid #dfdfdf;
+            font-size: 16px;
+            color: #999999;
+            text-indent: 15px;
+            font-family: "Comic Sans MS";
+            background-color: #f1f1f1;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="con">
+
+    <div class="block">
+        <div class="head">
+            设置默认今天
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox flexDate" value="new Date()">
+        </div>
+<script type="text/html"  class="code linenums prettyprint">
+<input type="text" readonly class="textBox flexDate" value="new Date()">
+</script>
+    </div>
+
+
+    <div class="block">
+        <div class="head">
+            重置时间精度
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox resetDate">
+            <a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy');resetDate.show();">重置为年</a>
+            <a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy/MM');resetDate.show();">重置为月</a>
+            <a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy/MM/dd');resetDate.show();">重置为日</a>
+            <a href="javascript:void(0);" class="btn"
+               onclick="resetDate.reset('yyyy-MM-dd HH');resetDate.show();">重置为时</a>
+            <a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy-MM-dd HH:mm');resetDate.show();">重置为分</a>
+            <a href="javascript:void(0);" class="btn"
+               onclick="resetDate.reset('yyyy-MM-dd HH:mm:ss');resetDate.show();">重置为秒</a>
+        </div>
+<script type="text/html" class="code linenums prettyprint">
+var resetDate=new FlexDate({
+        e:'.resetDate',
+        value:new Date()
+    });
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy');resetDate.show();">重置为年</a>
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy/MM');resetDate.show();">重置为月</a>
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy/MM/dd');resetDate.show();">重置为日</a>
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy-MM-dd HH');resetDate.show();">重置为时</a>
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy-MM-dd HH:mm');resetDate.show();">重置为分</a>
+<a href="javascript:void(0);" class="btn" onclick="resetDate.reset('yyyy-MM-dd HH:mm:ss');resetDate.show();">重置为秒</a>
+</script>
+    </div>
+
+
+    <div class="block">
+        <div class="head">
+            单独按钮启动
+        </div>
+        <div class="form">
+            <div class="wrapper">
+                <input type="text" readonly class="textBox single"><span></span>
+            </div>
+        </div>
+<script type="text/html" class="code linenums prettyprint">
+var singleDate=new FlexDate({
+        e:'.single',
+        bindClick:false
+    });
+    $('.single').next().click(function () {
+        singleDate.show();
+    });
+
+</script>
+    </div>
+
+
+    <div class="block">
+        <div class="head">
+            调整精度到年 | 调整精度到天 | 调整精度到分
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox flexDate" format="yyyy年">
+            <input type="text" readonly class="textBox flexDate" format="yyyy年MM月dd日">
+            <input type="text" readonly class="textBox flexDate" format="yyyy年MM月dd日 HH:mm">
+        </div>
+<script type="text/html" class="code linenums prettyprint">
+<input type="text" readonly class="textBox flexDate" format="yyyy年">
+<input type="text" readonly class="textBox flexDate" format="yyyy年MM月dd日">
+<input type="text" readonly class="textBox flexDate" format="yyyy年MM月dd日 HH:mm">
+</script>
+    </div>
+
+
+    <div class="block">
+        <div class="head">
+            去掉3个按钮
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox flexDate" clearBtn="false" todayBtn="false" confirmBtn="false">
+        </div>
+ <script type="text/html" class="code linenums prettyprint">
+<input type="text" readonly class="textBox flexDate" clearBtn="false" todayBtn="false" confirmBtn="false">
+</script>
+    </div>
+
+    <div class="block">
+        <div class="head">
+            限制选取最小时间
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox flexDate" min="new Date()">
+        </div>
+<script type="text/html" class="code linenums prettyprint">
+<input type="text" readonly class="textBox flexDate" min="new Date()">
+</script>
+    </div>
+
+    <div class="block">
+        <div class="head">
+            时间范围选取
+        </div>
+        <div class="form">
+            <input type="text" readonly class="textBox minDate">
+            至
+            <input type="text" readonly class="textBox maxDate">
+
+        </div>
+ <script type="text/html" class="code linenums prettyprint">
+var minDate=new FlexDate({
+        e:'.minDate',
+        confirm:function (value) {
+            maxDate.setMin(value);
+        }
+    });
+var maxDate=new FlexDate({
+        e:'.maxDate',
+        confirm:function (value) {
+            minDate.setMax(value);
+        }
+})
+</script>
+    </div>
+
+
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/prettify/r298/prettify.min.js"></script>
+<script src="dist/js/flexDate.js"></script>
+<script>
+    var image = new Image();
+    $('.prettyprint').each(function (i) {
+        var code=$.trim($(this).html());
+        $('<pre class="code linenums prettyprint"></pre>').replaceAll(this).text(code).parent().css('animation', 'flexDate_fadeInUp 0.5s ' + (i * 0.2) + 's forwards');
+    });
+    if (!(image.style.animation == '' || image.style.webkitAnimation == '')) {
+        $('.block').css('opacity', 1);
+    }
+    PR.prettyPrint();
+    FlexDate.setSkin('#ff8000');
+    var resetDate = new FlexDate({
+        e: '.resetDate',
+        value: new Date()
+    });
+    var singleDate = new FlexDate({
+        e: '.single',
+        bindClick: false
+    });
+    $('.wrapper>span').click(function () {
+        singleDate.show();
+    });
+    var minDate = new FlexDate({
+        e: '.minDate',
+        confirm: function (value) {
+            maxDate.setMin(value);
+        }
+    });
+    var maxDate = new FlexDate({
+        e: '.maxDate',
+        confirm: function (value) {
+            minDate.setMax(value);
+        }
+    })
+</script>
+</body>
+</html>

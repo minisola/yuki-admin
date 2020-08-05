@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="//webapi.amap.com/maps?v=1.4.0&key=9fcb8ae939958606750baa42ef4c6a1d&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.CitySearch"></script>
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/sourceDetail.js"></script>
+    <title>运单详情</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb" style="opacity:0">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">货源详情 <b></b></h2>
+    </div>
+    <div class="panel" style="margin-top: 120px;">
+    <div class="tab-container">
+            <div class="tab-content" style="padding:0;margin:0;">
+                <div id="home" class="tab-pane cont active">
+                    <div class="panel-body" id="info">
+                        <div class="row">
+                            <div class="container form-horizontal group-border-dashed zl-form">
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>基本信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>所属项目:<span class="text-muted">
+                                                 {{projectName}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>开始装货时间:<span class="text-muted">{{planStartTime}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>货物类别:<span class="text-muted">{{goodsCategory}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>货物名称:<span class="text-muted">
+                                                 {{projectName}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>剩余吨数:<span class="text-muted">{{goodsAmount}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>运输单价(元):<span class="text-muted">{{transportUnitPrice}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>发货单位:<span class="text-muted">
+                                                 {{loadingCorporationName}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>发货详细地址:<span class="text-muted">{{loadingAddress}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>收货单位:<span class="text-muted">
+                                                 {{unloadCorporationName}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>发货详细地址:<span class="text-muted">{{unloadAddress}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>调度员:<span class="text-muted">
+                                                 {{dispatcherName}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>调度员手机号:<span class="text-muted">{{dispatcherPhone}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="zl-page-handler text-center">
+    <a class="btn btn-space btn-default go-back-hook">关闭
+    </a>
+</div>
+</div>
+</body>
+</html>

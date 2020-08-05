@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+     <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/auditing.js"></script>
+            
+    <title>审批通过</title>
+</head>
+<body>
+    <div class="zl-page-inner zl-page-pb">
+            <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="container">
+                                <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-validate=""
+                                      novalidate="" class="form-horizontal group-border-dashed zl-form">
+                                    <div class="panel-body">
+                                                    <div class="form-group">
+                                                            <div class="col-sm-4">
+                                                                <label class="control-label">审批状态</label>
+                                                                <select  parsley-trigger="change" name="auditStatus" class="form-control input-sm">
+                                                                    <option value="2">审批驳回</option>
+                                                                    <option value="4">审批通过</option>
+                                                                </select>
+                                                            </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <div class="col-sm-4">
+                                                                    <label class="control-label">驳回原因</label>
+                                                                    <textarea name="auditReason" maxlength="200" placeholder="请输入"
+                                                                              class="form-control"></textarea>
+                                                            </div>
+                                                    </div>
+                                    </div>
+                                    <div class="zl-page-handler text-center">
+                                        <a class="btn btn-space btn-default go-back-hook">取消
+                                        </a>
+                                        <button type="submit"
+                                                class="btn btn-space btn-primary">审批
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+    
+    </div>
+<script type="text/html" id="templateAddress">
+
+
+</script>
+
+<!--<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>-->
+</body>
+</html>

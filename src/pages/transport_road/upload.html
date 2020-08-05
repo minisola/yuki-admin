@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/upload.js"></script>
+    <title>完善资料</title>
+</head>
+<body>
+
+<div class="zl-page-inner">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">完善资料</h2>
+    </div>
+
+    <div class="panel">
+        <div class="panel-body" id="boxList">
+        </div>
+    </div>
+</div>
+<script id="box" type="text/html">
+    <div class="panel-heading panel-heading-divider">
+        <b>{{boxName}}{{if multiple}}（多张上传）{{/if}}</b>
+    </div>
+    <div class="panel-body">
+        <div class="zl-upload-box">
+            <div class="panel-body" id="box-{{index}}">
+            </div>
+        </div>
+    </div>
+</script>
+<script id="file" type="text/html">
+    <div class="col-sm-4 file-hook">
+        <div class="list-group text-center zl-file-box">
+            <div class="list-group-item zl-file-content">
+                <img src="{{fileUrl ? (fileUrl + '?imageView2/0/format/jpg/interlace/1/q/75') :'/src/image/none.png'}}" alt="{{fileName}}" class="img-thumbnail zl-view-hook">
+                <span class="img-pad"></span>
+            </div>
+            <div class="list-group-item fileName">{{fileName}}</div>
+            <div class="list-group-item">
+                <div class="btn-group">
+                    {{if !hideUpBtn}}
+                    <a class="btn btn-primary btn-upload" id="up-btn-{{index}}"
+                       href="javascript:;">上传</a>
+                    {{/if}}
+                    <a href="javascript:;" data-id="{{fileId}}" class="btn btn-default btn-download"
+                       onclick="downloadFile(this)"
+                       {{if !fileUrl}}
+                       style="display: none"
+                       {{/if}}
+                    >下载</a>
+                    <a href="javascript:;" data-id="{{fileId}}" class="btn btn-default btn-del"
+                       onclick="del(this)"
+                       data-multiple="{{hideUpBtn}}"
+                       {{if !fileUrl}}
+                       style="display: none"
+                       {{/if}}
+                    >删除</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+</body>
+</html>

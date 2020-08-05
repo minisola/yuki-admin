@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/vue/vue.js"></script>
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/edit.js"></script>
+    <title>新建/编辑公路运单</title>
+</head>
+<body>
+<div class="zl-page-inner zl-page-pb" v-cloak>
+    <div class="page-head zl-page-head-fixed">
+        <button v-if="d.id || mode==='copy'" class="btn btn-primary btn-sm go-back-hook"><i
+                class="mdi mdi-arrow-left"></i> 返回
+        </button>
+        <h2 class="page-head-title" :project="auth.projectType">
+            {{title}}
+        </h2>
+    </div>
+    <div class="panel" :style="{marginTop:d.id ? '85px' : '65px' }">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-"
+                          data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-heading panel-heading-divider">
+                            <b>基本信息</b>
+                            <input type="hidden" name="id">
+                            <input type="hidden" name="isUploginkJs" id="isUploginkJs">
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>所属项目</label>
+                                    <select name="projectId" id="projectId" v-model="d.projectId" required
+                                            class="form-control input-sm select2">
+                                        <option value="">请选择</option>
+                                        <option v-for="el in auth.projects"  :value="el.id" :data="el.isFinancing">{{el.projectName}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>单据日期</label>
+                                    <input type="text" name="billDate" id="billDate" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           autocomplete="off"
+                                           v-model="d.billDate"
+                                           readonly
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>协议单号</label>
+                                    <input type="text" name="driverContractCode" minlength="0" maxlength="50"
+                                           :required="auth.projectType==3"
+                                           autocomplete="off"
+                                           v-model="d.driverContractCode"
+                                           parsley-trigger="change"
+                                           data-parsley-contract
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>预计装车时间</label>
+                                    <input type="text" autocomplete="off" id="planStartTime" name="planStartTime"
+                                           minlength="0"
+                                           maxlength="50"
+                                           readonly
+                                           v-model="d.planStartTime"
+                                           parsley-trigger="change" required
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>预计到达时间</label>
+                                    <input type="text" name="planEndTime" id="planEndTime" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           readonly
+                                           v-model="d.planEndTime"
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label">服务项设置</label>
+                                    <div>
+                                        <div class="be-checkbox be-checkbox-color inline">
+                                            <input id="isPolicy" v-model="d.isPolicy" name="isPolicy"
+                                                   :disabled="!auth.isPolicy" type="checkbox">
+                                            <label for="isPolicy">投保</label>
+                                        </div>
+                                        <div class="be-checkbox be-checkbox-color inline">
+                                            <input id="isLocate" v-model="d.isLocate" name="isLocate"
+                                                   :disabled="!auth.isLocate" type="checkbox">
+                                            <label for="isLocate">定位</label>
+                                        </div>
+                                        <div class="be-checkbox be-checkbox-color inline">
+                                            <input id="isUpetc" v-model="d.isUpetc" name="isUpetc"
+                                                   :disabled="!auth.isUpetc" type="checkbox">
+                                            <label for="isUpetc">etc服务</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 xs-pb-10">
+                                    <label class="control-label">发货清单号</label>
+                                    <textarea name="manifestNo"
+                                              v-model="d.manifestNo"
+                                              maxlength="200"
+                                              class="form-control input-sm"></textarea>
+                                </div>
+                                <div class="col-sm-10 xs-pb-10">
+                                    <label class="control-label">备注</label>
+                                    <textarea name="remark" maxlength="200"
+                                              v-model="d.remark"
+                                              class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                            <b>收发货信息</b>
+                        </div>
+                        <div class="panel-body address-box-hook">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>发货单位</label>
+                                    <div class="input-group input-group-sm" id="shipperCorporationName">
+                                        <input type="text" autocomplete="off" readonly name="shipperCorporationName"
+                                               v-model="d.shipperCorporationName"
+                                               minlength="0"
+                                               maxlength="100"
+                                               parsley-trigger="change" required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" @click="openAddressDialog(0)" type="button">选择</button>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label"><span class="text-danger">*</span>发货详细地址</label>
+                                    <input type="text" name="loadingAddress" minlength="0" maxlength="300"
+                                           parsley-trigger="change" required
+                                           v-model="d.loadingAddress"
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group  projectType2-hook1">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>联系人</label>
+                                    <input type="text" autocomplete="off" name="shipperPerson" minlength="0"
+                                           maxlength="50"
+                                           :required="auth.projectType==3"
+                                           v-model="d.shipperPerson"
+                                           readonly
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>联系方式</label>
+                                    <input type="text" name="shipperPhone" minlength="0" maxlength="50"
+                                           readonly
+                                           :required="auth.projectType==3"
+                                           v-model="d.shipperPhone"
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>收货单位</label>
+                                    <div class="input-group input-group-sm" id="customerAddressId">
+                                        <input type="text" autocomplete="off" readonly
+                                               name="[unloadAddressList]corporationName"
+                                               minlength="0"
+                                               maxlength="100"
+                                               v-model="d.unloadAddress.corporationName"
+                                               parsley-trigger="change"
+                                               required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" @click="openAddressDialog(1)" type="button">选择</button>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label"><span class="text-danger">*</span>收货详细地址</label>
+                                    <input type="text" name="[unloadAddressList]addressDeatail"
+                                           minlength="0" maxlength="300"
+                                           parsley-trigger="change" required
+                                           v-model="d.unloadAddress.addressDeatail"
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group projectType2-hook1">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>联系人</label>
+                                    <input type="text" autocomplete="off" name="[unloadAddressList]person" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change"
+                                           readonly
+                                           :required="auth.projectType==3"
+                                           v-model="d.unloadAddress.person"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>联系方式</label>
+                                    <input type="text" name="[unloadAddressList]phone" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           v-model="d.unloadAddress.phone"
+                                           :required="auth.projectType==3"
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                            <b>货物信息</b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>货物类别</label>
+                                    <select name="[goodsList]goodsCategory"
+                                            v-model="d.goods.goodsCategory"
+                                            required parsley-trigger="change" class="form-control input-sm">
+                                        <option value="">请选择</option>
+                                        <option v-for="(el,key) in auth.HWLB" :value="key">{{el}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>货物名称</label>
+                                    <input type="text"
+                                           autocomplete="off"
+                                           v-model="d.goods.goodsName"
+                                           name="[goodsList]goodsName" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>件数</label>
+                                    <input type="number"
+                                           autocomplete="off"
+                                           data-parsley-integer
+                                           v-model="d.goods.goodsAmount"
+                                           name="[goodsList]goodsAmount" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>包装</label>
+                                    <select required name="[goodsList]goodsPacking"
+                                            v-model="d.goods.goodsPacking"
+                                            id="goodsPacking" class="form-control input-sm">
+                                        <option value="">请选择</option>
+                                        <option v-for="(el,key) in auth.BZ" :value="key">{{el}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>重量/体积</label>
+                                    <div class="row">
+                                        <div class="col-xs-8 pr0">
+                                            <input type="text"
+                                                   data-parsley-quantity
+                                                   v-if="d.goods.goodsUnit==1"
+                                                   autocomplete="off"
+                                                   v-model="d.goods.goodsWeight"
+                                                   name="[goodsList]goodsWeight"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                            <input type="text"
+                                                   v-if="d.goods.goodsUnit==2"
+                                                   data-parsley-quantity
+                                                   autocomplete="off"
+                                                   v-model="d.goods.goodsVolume"
+                                                   name="[goodsList]goodsVolume"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                        <div class="col-xs-4 pl0">
+                                            <select name="[goodsList]goodsUnit"
+                                                    v-model="d.goods.goodsUnit"
+                                                    class="form-control input-sm">
+                                                <option value="1">吨</option>
+                                                <option value="2">立方</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-heading panel-heading-divider">
+                            <b>车辆/司机/收款人信息</b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-4 xs-pb-10"  >
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span
+                                            class="text-danger">*</span>车牌号码</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="plateNo"
+                                               minlength="0"
+                                               maxlength="50"
+                                               data-parsley-plate
+                                               v-truck
+                                               @focus="showTips(1)"
+                                               @blur="showTips(0)"
+                                               parsley-trigger="change" required
+                                               v-model="d.plateNo"
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-primary btn-lg"
+                                                @mouseover="showTips(1)"
+                                                @mouseout="showTips(0)"
+                                                id="showTips" @click="openPlateDialog" type="button">选择</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>车牌颜色</label>
+                                    <select name="plateType"
+                                            v-model="d.plateType"
+                                            v-truck
+                                            id="plateType" required class="form-control input-sm">
+                                        <option value="2">黄色</option>
+                                        <option value="1">蓝色</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType!=2" class="text-danger">*</span>载重(吨)</label>
+                                    <input type="text" autocomplete="off" name="truckTonnage" minlength="0"
+                                           maxlength="50"
+                                           max="350"
+                                           data-parsley-quantity
+                                           v-model="d.truckTonnage"
+                                           :readonly="lock.truck.truckTonnage"
+                                           parsley-trigger="change"
+                                           :required="auth.projectType!=2"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>道路运输许可证</label>
+                                    <div :class="auth.transportNoState ? 'input-group' : ''">
+                                        <input type="text" autocomplete="off" name="transportNo" minlength="0"
+                                               maxlength="50"
+                                               v-model="d.transportNo"
+                                               :readonly="lock.truck.transportNo"
+                                               parsley-trigger="change"
+                                               :required="auth.projectType==3"
+                                               placeholder="请输入" class="form-control input-sm">
+                                        <span v-show="auth.transportNoState" class="input-group-addon text-danger">{{auth.transportNoState}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>车辆准牵引总质量(吨)</label>
+                                    <input type="text" name="truckMaxWeight" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           :required="auth.projectType==3"
+                                           v-model="d.truckMaxWeight"
+                                           :readonly="lock.truck.truckMaxWeight"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType!=2" class="text-danger">*</span>车辆长度(米)</label>
+                                    <input type="text" autocomplete="off" name="truckLength" minlength="0"
+                                           maxlength="50"
+                                           max="80"
+                                           v-model="d.truckLength"
+                                           :readonly="lock.truck.truckLength"
+                                           data-parsley-quantity
+                                           parsley-trigger="change"
+                                           :required="auth.projectType!=2"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType!=2" class="text-danger">*</span>车型</label>
+                                    <select name="truckBox"
+                                            v-model="d.truckBox"
+                                            class="form-control input-sm"
+                                            :required="auth.projectType!=2"
+                                            parsley-trigger="change">
+                                        <option value="">请选择</option>
+                                        <option v-for="(el,key) in auth.truckBox" :value="key">{{el}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType!=2" class="text-danger">*</span>车主</label>
+                                    <input type="text" name="owner" minlength="0" maxlength="50"
+                                           v-model="d.owner"
+                                           :readonly="lock.truck.owner"
+                                           parsley-trigger="change"
+                                           :required="auth.projectType!=2"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span
+                                            class="text-danger">*</span>司机姓名</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="driverName"
+                                               minlength="0"
+                                               maxlength="30"
+                                               v-model="d.driverName"
+                                               v-driver
+                                               @focus="showDriverTips(1)"
+                                               @blur="showDriverTips(0)"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button class="btn btn-primary btn-lg"
+                                                @mouseover="showDriverTips(1)"
+                                                @mouseout="showDriverTips(0)"
+                                                id="showDriverTips"
+                                                @click="openDriverDialog" type="button">选择</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType!=2" class="text-danger">*</span>联系电话</label>
+                                    <input type="text" name="driverPhone"
+                                           data-parsley-telephone minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change"
+                                           :required="auth.projectType!=2"
+                                           v-model="d.driverPhone"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>驾驶证号</label>
+                                    <input type="text" name="driverLicense"
+                                           data-parsley-idcard
+                                           minlength="0"
+                                           v-model="d.driverLicense"
+                                           v-driver
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span v-show="auth.projectType==3" class="text-danger">*</span>从业资格证号</label>
+                                    <div :class="auth.qualificationCertificateState ? 'input-group' : ''">
+                                    <input type="text" name="qualificationCertificate"
+                                           v-model="d.qualificationCertificate"
+                                           minlength="0"
+                                           maxlength="50"
+                                           :readonly="lock.qcNo"
+                                           parsley-trigger="change"
+                                           :required="auth.projectType==3"
+                                           placeholder="请输入" class="form-control input-sm">
+                                    <span v-show="auth.qualificationCertificateState" class="input-group-addon text-danger">{{auth.qualificationCertificateState}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span
+                                            class="text-danger">*</span>收款人户名</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="receiptName"
+                                               minlength="0"
+                                               maxlength="50"
+                                               v-model="d.receiptName"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button class="btn btn-primary btn-lg" @click="openReceiptDialog" type="button">选择
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>证件号</label>
+                                    <input type="text" name="receiptIdentity" autocomplete="off" minlength="0"
+                                           maxlength="50"
+                                           v-model="d.receiptIdentity"
+                                           parsley-trigger="change"
+                                           required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>预留手机号</label>
+                                    <input type="text" name="receiptPhone" autocomplete="off" minlength="0"
+                                           maxlength="50"
+                                           v-model="d.receiptPhone"
+                                           parsley-trigger="change"
+                                           required
+                                           data-parsley-telephone
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>对私/对公</label>
+                                    <select name="receiptDirection"
+                                            v-model="d.receiptDirection"
+                                            required class="form-control input-sm">
+                                        <option value="1">对私</option>
+                                        <option value="2">对公</option>
+                                    </select>
+                                    </span>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>银行卡号</label>
+                                    <input type="text" name="receiptCard"
+                                           v-model="d.receiptCard"
+                                           autocomplete="off" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           data-parsley-integerthanzero
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 xs-pb-10" v-if="d.receiptDirection==1">
+                                    <label class="control-label"><span class="text-danger">*</span>银行名称</label>
+                                    <input type="text" autocomplete="off"
+                                           v-model="d.receiptBankName"
+                                           readonly name="receiptBankName"
+                                           minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="根据银行卡号自动识别" class="form-control input-sm">
+                                </div>
+
+                                <div class="col-sm-4 xs-pb-10" v-if="d.receiptDirection==2" @click="openBankDialog">
+                                    <label class="control-label"><span class="text-danger">*</span>开户行</label>
+                                    <div class="input-group input-group-sm" id="receiptBankName">
+                                        <input type="text" autocomplete="off" readonly name="receiptBankName"
+                                               minlength="0"
+                                               v-model="d.receiptBankName"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button">选择</button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                            <b>费用信息</b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>应收单价(元)</label>
+                                    <input type="text" autocomplete="off"
+                                           v-model="d.feePrice"
+                                           @keyup="feeTotalMul"
+                                           name="feePrice" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           data-parsley-price
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>数量</label>
+                                    <div class="row">
+                                        <div class="col-xs-8 pr0">
+                                            <input type="text" autocomplete="off" name="feeAmount" minlength="0"
+                                                   maxlength="50"
+                                                   v-model="d.feeAmount"
+                                                   @keyup="feeTotalMul"
+                                                   data-parsley-quantity
+                                                   parsley-trigger="change" required class="form-control input-sm"
+                                                   placeholder="请输入">
+                                        </div>
+                                        <div class="col-xs-4 pl0">
+                                            <select name="feeUnit"
+                                                    v-model="d.feeUnit"
+                                                    class="form-control input-sm">
+                                                <option value="1">吨</option>
+                                                <option value="2">车</option>
+                                                <option value="3">立方</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">应收总运费(元)</label>
+                                    <input type="text" autocomplete="off" name="feeTotal" id="feeTotal" minlength="0"
+                                           maxlength="50"
+                                           v-model="d.feeTotal"
+                                           parsley-trigger="change"
+                                           placeholder="系统自动计算" readonly class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">应付费用组成</label>
+                                    <div>
+                                        <div class="be-checkbox be-checkbox-color inline">
+                                            <input id="payType0" v-model="d.payType" name="payType" type="radio"
+                                                   value="1">
+                                            <label for="payType0">总费用</label>
+                                        </div>
+                                        <div class="be-checkbox be-checkbox-color inline">
+                                            <input id="payType1" v-model="d.payType" name="payType" checked type="radio"
+                                                   value="0">
+                                            <label for="payType1">预付+到付+回单付</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <label class="control-label"><span class="text-danger">*</span>应付总费用(元)</label>
+                                    <input type="text" autocomplete="off" name="payFare" minlength="0"
+                                           maxlength="50"
+                                           data-parsley-pricethanzero
+                                           v-model="d.payFare"
+                                           required
+                                           parsley-trigger="change"
+                                           :readonly="d.payType== 0 ? 'readonly' : false"
+                                           :placeholder="d.payType== 0 ? '系统自动计算' : '请输入'" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="pay-box-hook" v-if="d.payType==0">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>预付金额(元)</label>
+                                        <div class="row">
+                                            <div class="col-xs-8 pr0">
+                                                <input type="text" autocomplete="off" name="prepayMoney" minlength="0"
+                                                       maxlength="50"
+                                                       v-model="d.prepayMoney"
+                                                       @keyup="payFareAdd"
+                                                       data-parsley-price
+                                                       parsley-trigger="change" required class="form-control input-sm"
+                                                       placeholder="请输入">
+                                            </div>
+                                            <div class="col-xs-4 pl0">
+                                                <select name="prepayType"
+                                                        v-model="d.prepayType"
+                                                        class="form-control input-sm">
+                                                    <option value="1">现金</option>
+                                                    <option value="2">线下油卡</option>
+                                                    <option value="3" v-if="d.isFinancing==-1">线上油卡</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" v-if="d.prepayType==2">
+                                        <label class="control-label"><span class="text-danger">*</span>油卡卡号</label>
+                                        <input type="text" name="oilCardNo"
+                                               v-model="d.oilCardNo"
+                                               autocomplete="off" minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>到付金额(元)</label>
+                                        <input type="text" autocomplete="off" name="arriveMoney" minlength="0"
+                                               autocomplete="off"
+                                               maxlength="50"
+                                               @keyup="payFareAdd"
+                                               data-parsley-price
+                                               v-model="d.arriveMoney"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>回单付金额(元)</label>
+                                        <input type="text" name="receiptMoney" autocomplete="off" minlength="0"
+                                               maxlength="50"
+                                               autocomplete="off"
+                                               @keyup="payFareAdd"
+                                               v-model="d.receiptMoney"
+                                               data-parsley-price
+                                               parsley-trigger="change" required
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">
+                                {{
+                                mode === "copy" ? "生成运单" : "保存"
+                                }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

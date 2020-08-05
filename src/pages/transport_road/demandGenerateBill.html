@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/laydate/laydate.js"></script>
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/demandGenerateBill.js"></script>
+    <title>生成运单</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">生成运单</h2>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-body">
+                        <div class="panel-heading panel-heading-divider">
+                                <b>卸完货后联系人</b>
+                            </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>姓名:</label>
+                                        <input type="text"
+                                               autocomplete="off"
+                                               name="unloadingContact" minlength="0" maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>手机号:</label>
+                                            <input type="text"
+                                                   autocomplete="off"
+                                                   name="unloadingPhone"
+                                                   parsley-trigger="change" required
+                                                   data-parsley-telephone
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                            <b>回单邮寄地址</b>
+                        </div>
+                        <div class="panel-body confirmFee">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>地址</label>
+                                    <input type="text" autocomplete="off" name="returnAddress" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>姓名</label>
+                                        <input type="text" autocomplete="off" name="returnContact" minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>手机号</label>
+                                            <input type="text" autocomplete="off" name="returnPhone" minlength="0"
+                                                   maxlength="50"
+                                                   parsley-trigger="change" required
+                                                   data-parsley-telephone
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                
+                            </div>
+                            </div>
+                            <div class="panel-heading panel-heading-divider">
+                                    <b>附加信息</b>
+                                </div>
+                            <div class="panel-body">
+                                    <div class="form-group">
+                                            <div class="col-sm-4">
+                                                    <label class="control-label">是否定位</label>
+                                                    <select name="isLocate" class="form-control input-sm">
+                                                            <option value="1">是</option>
+                                                            <option value="2">否</option>
+                                                        </select>
+                                                </div>
+                                        <div class="col-sm-4">
+                                                <label class="control-label">是否投保</label>
+                                                <select name="isPolicy" class="form-control input-sm">
+                                                        <option value="1">是</option>
+                                                        <option value="2">否</option>
+                                                    </select>
+                                            </div>
+                            </div>
+                                </div>
+                        </div>
+
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script id="temp" type="text/html">
+
+</body>
+</html>

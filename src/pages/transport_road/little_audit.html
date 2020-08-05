@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <script src="/src/libs/requirejs/require.js" id="script"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/little_audit.js"></script>
+    <title>新建/编辑项目</title>
+</head>
+<body>
+<!-- <table id="table-main" lay-filter="table-main">
+</table> -->
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="layui-form" style="width:80%;margin:0px auto">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="150">
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>单价</th>
+                    <th>吨数</th>
+                    <th>预计运费</th>
+                    <th>附件</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>出厂(港)</td>
+                    <td class="transportUnitPrice"></td>
+                    <td class="loadingGoodsAmount"></td>
+                    <td id="planFare1"></td>
+                    <td id="file1"><a target="_blank">查看附件</a></td>
+                </tr>
+                <tr>
+                    <td>入厂(港)</td>
+                    <td class="transportUnitPrice"></td>
+                    <td class="unloadGoodsAmount"></td>
+                    <td id="planFare2"></td>
+                    <td id="file2"><a target="_blank"></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" style="width:80%;margin:0px auto">
+            <div class="container">
+                <form id="form" action="#"
+                      data-parsley-namespace="data-parsley-" data-parsley-validate=""
+                      novalidate=""
+                      class="form-horizontal group-border-dashed zl-form" data-parsley-excluded="[disabled],:hidden">
+                    <input type="hidden" name="id">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label class="control-label">对账吨数</label>
+                                <input type="text" autocomplete="off" disabled name="feeAmount" id="feeAmount" minlength="0"
+                                       maxlength="50" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label class="control-label"><span class="text-danger">*</span>应付单价</label>
+                                <input type="text" autocomplete="off"
+                                       name="transportUnitPrice"
+                                       id="transportUnitPrice"
+                                       required
+                                       data-parsley-trigger="input"
+                                       placeholder="请输入" class="form-control input-sm">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="control-label">应付运费</label>
+                                <input type="text" autocomplete="off" name="payFare" id="payFare" minlength="0"
+                                       maxlength="50"
+                                       required disabled
+                                       placeholder="系统自动计算" class="form-control input-sm">
+                            </div>
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <div class="col-sm-4">-->
+<!--                                <label class="control-label"><span class="text-danger">*</span>应收单价</label>-->
+<!--                                <input type="text" autocomplete="off"-->
+<!--                                       name="feePrice"-->
+<!--                                       id="feePrice"-->
+<!--                                       required-->
+<!--                                       data-parsley-trigger="input"-->
+<!--                                       placeholder="请输入" class="form-control input-sm">-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-4">-->
+<!--                                <label class="control-label"><span class="text-danger">*</span>应收运费</label>-->
+<!--                                <input type="text" autocomplete="off" name="receiveFare" id="receiveFare" minlength="0"-->
+<!--                                       maxlength="50"-->
+<!--                                       required readonly-->
+<!--                                       placeholder="系统自动计算" class="form-control input-sm">-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="zl-page-handler text-center">
+                        <a class="btn btn-space btn-default" id="revoke">审批驳回
+                        </a>
+                        <button type="submit"
+                                class="btn btn-space btn-primary">审批通过
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

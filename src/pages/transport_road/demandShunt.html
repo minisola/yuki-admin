@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/demandShunt.js"></script>
+    <title>运力调配</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">运力调配</h2>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-body">
+                        <div class="panel-heading panel-heading-divider">
+                            <b>车辆/司机/收款人信息</b>
+
+                            <!--<input type="hidden" name="driverId">-->
+                            <!--<input type="hidden" name="truckId">-->
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span class="text-danger">*</span>车牌号码</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="plateNo"
+                                               minlength="0"
+                                               maxlength="50"
+                                               data-parsley-plate
+                                               parsley-trigger="change" required
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button class="btn btn-primary btn-lg" id="plateNo" type="button">选择</button>
+                                    </div>
+                                    </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>载重(吨)</label>
+                                    <input type="text" autocomplete="off" name="truckTonnage" minlength="0"
+                                           maxlength="50"
+                                           max="100"
+                                           data-parsley-quantity
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>车辆长度(米)</label>
+                                    <input type="text" autocomplete="off" id="truckLength" minlength="0"
+                                           maxlength="50"
+                                           max="50"
+                                           data-parsley-quantity
+                                           name="truckLength"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>车型</label>
+                                    <select name="truckBox" class="form-control input-sm" required parsley-trigger="change">
+                                        <option value="">请选择</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>车主</label>
+                                    <input type="text" name="owner" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span class="text-danger">*</span>司机姓名</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="driverName"
+                                               minlength="0"
+                                               maxlength="30"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button class="btn btn-primary btn-lg" id="driverName" type="button">选择</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>联系电话</label>
+                                    <input type="text" name="driverPhone"
+                                           data-parsley-telephone minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>驾驶证号</label>
+                                    <input type="text" name="driverLicense"
+                                           data-parsley-idcard
+                                            minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label col-xs-12 xs-pl-0 xs-pr-0 text-left-important"><span class="text-danger">*</span>收款人户名</label>
+                                    <div class="col-sm-9  xs-pl-0 xs-pr-0">
+                                        <input type="text" autocomplete="off" name="receiptName"
+                                               minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请输入或选择" class="form-control  input-sm">
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button class="btn btn-primary btn-lg" id="receiptName" type="button">选择</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>证件号</label>
+                                    <input type="text" name="receiptIdentity" autocomplete="off" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>预留手机号</label>
+                                    <input type="text" name="receiptPhone" autocomplete="off" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           required
+                                           data-parsley-telephone
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>对私/对公</label>
+                                    <select name="receiptDirection" required class="form-control input-sm" >
+                                        <option value="1">对私</option>
+                                        <option value="2">对公</option>
+                                    </select>
+                                    </span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>银行卡号</label>
+                                    <input type="number" name="receiptCard" autocomplete="off" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4 receiptDirection1-hook">
+                                    <label class="control-label"><span class="text-danger">*</span>银行名称</label>
+                                    <input type="text" autocomplete="off" readonly name="receiptBankName"
+                                           minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           placeholder="根据银行卡号自动识别" class="form-control input-sm">
+                                    <input type="hidden" name="receiptBankCode">
+                                </div>
+
+                                <div class="col-sm-4 receiptDirection2-hook" style="display: none">
+                                    <label class="control-label"><span class="text-danger">*</span>开户行</label>
+                                    <div class="input-group input-group-sm" id="receiptBankName">
+                                        <input type="text" autocomplete="off" readonly name="receiptBankName"
+                                               minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button">选择</button>
+                                                                                <input type="hidden" name="receiptBankCode">
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <label class="control-label">备注</label>
+                                        <textarea name="remark" maxlength="200"
+                                                  class="form-control"></textarea>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">保存
+                            </button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

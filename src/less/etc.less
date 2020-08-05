@@ -1,0 +1,1062 @@
+.absolute {
+    position: absolute;
+}
+
+.relative {
+    position: relative;
+}
+
+.box {
+    position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.bg-cover {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+
+.app-page {
+    min-width: 1300px;
+    overflow-x: hidden;
+}
+
+.app-page.etc {
+    background: #f3f4f8;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.etc-title {
+    text-align: center;
+    position: relative;
+    height: .35rem;
+    margin-bottom: .2rem;
+
+    h1 {
+        display: inline-block;
+        margin: 0;
+        font-size: 0.18rem;
+        font-weight: 700;
+        line-height: .5rem;
+        letter-spacing: 0.01rem;
+        color: #000000;
+        position: relative;
+    }
+
+    .etc-statistics-time {
+        font-weight: normal;
+        width: 1.43rem;
+        height: 0.1rem;
+        font-size: 0.1rem;
+        letter-spacing: 0;
+        color: #333333;
+        position: absolute;
+        bottom: .35rem;
+        right: -1.53rem;
+    }
+
+}
+
+.tenantry-selector {
+    text-align: left;
+    display: inline-block;
+    position: absolute;
+    width: 1.7rem;
+    right: 0.09rem;
+    bottom: 0;
+}
+
+.app-page.etc {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-width: 1300px;
+}
+
+.etc-tenantry-body {
+    padding: 0 .05rem;
+    margin: 0 auto;
+    position: relative;
+}
+
+.etc-tenantry-main {
+    width: 3.92rem;
+    height: 4.84rem;
+    .box;
+    left: 2.97rem;
+}
+
+
+.etc .chart-box,
+.etc .text-box {
+    background: #fff;
+    border-radius: 0.03rem;
+    border: solid 0.01rem #f2f2f6;
+    position: relative;
+
+    .chart-item {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+.etc-tenantry-left {
+    float: left;
+}
+
+.etc-box-bottom-spacing {
+    margin-bottom: 0.07rem;
+}
+
+.etc-box-left-spacing {
+    margin-left: 0.045rem;
+}
+
+
+//税负成本
+.tenantry-cost {
+    background-image: linear-gradient(45deg,
+            #009ee0,
+            #1aa8e3);
+    box-shadow: 0rem 0.02rem 0.05rem 0rem rgba(251, 70, 121, 0.24);
+    border: none;
+    padding: .13rem .21rem;
+
+    .text-box-title {
+        font-size: 0.13rem;
+        line-height: 0.2rem;
+    }
+
+    .text-box-content {
+        font-size: 0.26rem;
+        line-height: 0.26rem;
+        margin: .04rem 0;
+    }
+
+    .text-box-des {
+        font-size: 0.13rem;
+        line-height: 0.26rem;
+    }
+}
+
+.tenantry-rate {
+    .text-box-title {
+        margin: .19rem 0 .15rem .19rem;
+        font-size: 0.13rem;
+        line-height: 1;
+        color: #27352f;
+    }
+}
+
+.etc-tabs {
+    text-align: center;
+
+    .etc-tabs-link-box {
+        border-radius: 0.03rem;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .etc-tabs-link {
+        background: #f3f4f8;
+        padding: 0.09rem .14rem;
+        font-size: 0.12rem;
+        color: #666;
+        float: left;
+        cursor: pointer;
+
+        &.active {
+            background: #019ee0;
+            color: #fff;
+        }
+    }
+
+    .etc-tabs-tab {
+        display: none;
+        padding: 0 .13rem;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+
+        th {
+            font-size: 0.12rem;
+            line-height: 0.26rem;
+            color: #999999;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        tbody {
+            border-top: 1px solid #f2f2f6;
+
+            tr td {
+                text-align: center;
+                font-size: 0.12rem;
+                height: 0.38rem;
+                line-height: .38rem;
+
+                div {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+            }
+
+            tr:nth-child(even) {
+                background: #fbfbfb;
+            }
+
+            tr:nth-child(1) {
+                color: #ff3c00;
+
+                .ranking-td {
+                    display: inline-block;
+                    width: 0.16rem;
+                    height: 0.22rem;
+                    color: #fff;
+                    background: #ff3c00;
+                    vertical-align: middle;
+                    line-height: .22rem;
+                    position: relative;
+
+                    span {
+                        position: relative;
+                        top: -0.02rem;
+                    }
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        border: .08rem solid #fff;
+                        border-top-color: transparent;
+                        border-left-color: transparent;
+                        border-right-color: transparent;
+                    }
+                }
+            }
+
+            tr:nth-child(2) {
+                color: #ff8400;
+
+                .ranking-td {
+                    display: inline-block;
+                    width: 0.16rem;
+                    height: 0.22rem;
+                    color: #fff;
+                    background: #ff8400;
+                    vertical-align: middle;
+                    line-height: .22rem;
+                    position: relative;
+
+                    span {
+                        position: relative;
+                        top: -0.02rem;
+                    }
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        border: .08rem solid #fff;
+                        border-top-color: transparent;
+                        border-left-color: transparent;
+                        border-right-color: transparent;
+                    }
+                }
+            }
+
+            tr:nth-child(3) {
+                color: #ffba00;
+
+                .ranking-td {
+                    display: inline-block;
+                    width: 0.16rem;
+                    height: 0.22rem;
+                    color: #fff;
+                    background: #ffba00;
+                    vertical-align: middle;
+                    line-height: .22rem;
+                    position: relative;
+
+                    span {
+                        position: relative;
+                        top: -0.02rem;
+                    }
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        border: .08rem solid #fff;
+                        border-top-color: transparent;
+                        border-left-color: transparent;
+                        border-right-color: transparent;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .ranking-th {
+        width: .35rem;
+    }
+}
+
+.etc-invoice-full {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, .8);
+    display: none;
+
+    img {
+        width: 100%
+    }
+
+    i {
+        display: block;
+        width: 8rem;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0)
+    }
+
+    span {
+        position: absolute;
+        right: 0.15rem;
+        top: 0.1rem;
+        font-size: 0.3rem;
+        cursor: pointer;
+        color: #eee;
+
+        &:hover {
+            opacity: .5;
+        }
+    }
+}
+
+
+.tenantry-rate {
+    &-title {
+        position: absolute;
+        left: .16rem;
+        top: .13rem;
+        font-size: .13rem;
+    }
+
+    &-average {
+        font-size: 0.09rem;
+        color: #515b6f;
+        position: absolute;
+        right: .23rem;
+        top: .15rem;
+        text-align: center;
+
+        b {
+            display: block;
+            font-weight: normal;
+            font-size: .15rem;
+            color: #010101
+        }
+    }
+}
+
+.tenantry-map-title {
+    font-size: 0.13rem;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 0.26rem;
+    color: #666666;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: .28rem;
+}
+
+
+
+
+.invoice-title {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(/src/image/etc/invoice-bg.jpg) top center;
+    background-size: cover;
+
+    .invoice-title-title {
+        margin-top: .12rem;
+    }
+
+    .invoice-title-title h1 {
+        margin: 0;
+        text-align: center;
+        color: #ffffff;
+        font-weight: normal;
+        font-size: .2rem;
+    }
+
+    .text-box {
+        background: none;
+    }
+}
+
+.invoice-title-left {
+    .box;
+    top: .65rem;
+    left: .24rem;
+    width: 3.28rem;
+    height: 2.98rem;
+
+    .text-box {
+        width: 3.281rem;
+        height: 0.698rem;
+        .bg-cover;
+        margin-bottom: .06rem;
+        padding: .1rem .22rem;
+    }
+
+    .left-tab-0 {
+        width: 3.281rem;
+        height: 1.469rem;
+        background-image: url(/src/image/etc/left-0-bg.png);
+
+        .text-box-title {
+            display: block;
+            font-size: .125rem;
+
+            &-addon {
+                font-size: .09rem;
+                position: absolute;
+                right: 0;
+                top: .02rem;
+
+                span {
+                    color: #fff;
+                }
+
+                a {
+                    text-decoration: underline;
+                    color: #ff0000;
+                    font-size: .125rem;
+                    margin: 0 .02rem;
+                }
+            }
+        }
+        &-box{
+            margin-top: .094rem;
+            .box-item{
+                width: 50%;
+                float: left;
+                .item-title{
+                    color:#4cb1ff;
+                }
+                .item-content{
+                    padding:.027rem 0;
+                    color:#fff;
+                    font-size: 0.167rem;
+                }
+              
+            }
+        }
+        .text-box-des{
+            font-size: 0.083rem;  
+             color:#fff;    
+        }
+    }
+
+    // .left-tab-1 {
+    //     width: 2.979rem;
+    //     background-image: url(/src/image/etc/left-1-bg.png);
+    // }
+
+    .left-tab-1 {
+        position: relative;
+        width: 2.974rem;
+        height: 0.698rem;
+        background-image: url(/src/image/etc/left-1-bg.png);
+        font-size: 0;
+
+        .text-box-content {
+            margin-top: .1rem;
+        }
+
+        .text-box-chart {
+            .box;
+            top: .073rem;
+            width: .673rem;
+            height: .573rem;
+            right: .359rem;
+
+            &:after {
+                position: absolute;
+                width: .47rem;
+                height: .47rem;
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                content: '';
+                border-radius: 50%;
+                border: 1px solid #1b4ca0;
+            }
+
+            span {
+                .box;
+                width: .673rem;
+                height: .573rem;
+                z-index: 9;
+            }
+
+            i {
+                font-style: normal;
+                width: 0.4rem;
+                height: 0.4rem;
+                display: block;
+                color: #01d1ff;
+                font-size: 0.1rem;
+                position: absolute;
+                left: .14rem;
+                top: 0.2rem;
+                text-align: center;
+            }
+        }
+    }
+
+    .left-tab-2 {
+        position: relative;
+        background-image: url(/src/image/etc/left-2-bg.png);
+        width: 3.276rem;
+        height: 0.698rem;
+
+        .text-box-content {
+            margin-top: .1rem;
+        }
+
+        .text-box-chart {
+            .box;
+            top: .073rem;
+            width: .673rem;
+            height: .573rem;
+            right: .359rem;
+
+            &:after {
+                position: absolute;
+                width: .47rem;
+                height: .47rem;
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                content: '';
+                border-radius: 50%;
+                border: 1px solid #1b4ca0;
+            }
+
+            span {
+                .box;
+                width: .673rem;
+                height: .573rem;
+                z-index: 9;
+            }
+
+            i {
+                font-style: normal;
+                width: 0.4rem;
+                height: 0.4rem;
+                display: block;
+                color: #01d1ff;
+                font-size: 0.1rem;
+                position: absolute;
+                left: .14rem;
+                top: 0.2rem;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.text-box-title {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+}
+
+.invoice-title {
+    .text-box-title {
+        font-size: 0.09rem;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 0.11rem;
+        color: #4cb1ff;
+    }
+
+    .text-box-content {
+        font-size: 0.167rem;
+        line-height: .28rem;
+        color: #e5f4ff;
+    }
+
+    .text-box-des {
+        font-size: 0.094rem;
+        color: #4cb1ff;
+    }
+}
+
+.invoice-title-main {
+    .chart-box {
+        .box;
+        width: 3.328rem;
+        height: 3.328rem;
+        background-color: rgba(18, 42, 115, .4);
+        border-radius: 50%;
+        left: 3.339rem;
+        top: .464rem;
+    }
+
+    .chart-item {
+        .box;
+        top: .5rem;
+        width: 3.328rem;
+        height: 2.6rem;
+    }
+
+    .chart-info {
+        margin-top: .25rem;
+        text-align: center;
+        color: #fff;
+        font-size: 0.132rem;
+        z-index: 1;
+    }
+}
+
+.invoice-title-right {
+    .box;
+    width: 2.953rem;
+    right: .195rem;
+    top: .645rem;
+
+    .right-tab-0 {
+        height: 1.245rem;
+        margin-bottom: .052rem;
+        .bg-cover;
+        background-image: url(/src/image/etc/right-0-bg.png);
+
+        .text-box-item {
+            float: left;
+            width: 50%;
+            text-align: center;
+            padding: .115rem 0;
+
+            .text-box-title {
+                font-size: 0.094rem;
+            }
+
+            .text-box-content {
+                font-size: 0.167rem;
+            }
+        }
+    }
+
+    .right-tab-1 {
+        height: 0.823rem;
+        margin-bottom: .052rem;
+        padding: .109rem .12rem;
+        font-size: 0.167rem;
+        position: relative;
+        .bg-cover;
+        background-image: url(/src/image/etc/right-1-bg.png);
+
+        .text-box-title {
+            top: -.05rem;
+        }
+
+        .text-box-content {
+            position: relative;
+            top: -.05rem;
+            font-size: 0.167rem;
+        }
+
+        .text-box-des {
+            font-size: 0.094rem;
+        }
+
+        &:before {
+            .box;
+            content: "";
+            right: 0;
+            top: .19rem;
+            width: 1.255rem;
+            height: 0.245rem;
+            background-image: url(/src/image/etc/cost-decoration.png);
+        }
+
+    }
+
+    .right-tab-2 {
+        height: 0.823rem;
+        .bg-cover;
+        background-image: url(/src/image/etc/right-1-bg.png);
+
+        .text-box-title {
+            position: relative;
+            left: .13rem;
+            top: 0.099rem;
+        }
+
+        .text-box-content {
+            position: relative;
+            top: .25rem;
+            left: .2rem;
+
+            b {
+                display: block;
+                color: #4cb1ff;
+                font-size: 0.094rem;
+                font-weight: normal;
+                line-height: 1;
+            }
+        }
+
+        .text-box-chart {
+            .box;
+            right: 0;
+            top: .13rem;
+            width: 1.9rem;
+            height: 0.61rem;
+            text-align: center;
+
+            &-item {
+                width: 0.61rem;
+                height: 0.61rem;
+                float: left;
+                position: relative;
+
+                span {
+                    display: block;
+                    width: 0.61rem;
+                    height: 0.61rem;
+                }
+            }
+
+        }
+
+        .text-box-chart-item {
+            position: relative;
+
+            &:after {
+                position: absolute;
+                width: .51rem;
+                height: .51rem;
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                content: '';
+                border-radius: 50%;
+                border: 1px solid #1b4ca0;
+            }
+
+            span {
+                position: relative;
+                z-index: 999;
+            }
+
+            i {
+                font-style: normal;
+                width: 0.4rem;
+                height: 0.4rem;
+                display: block;
+                color: #01d1ff;
+                font-size: 0.083rem;
+                position: absolute;
+                left: .11rem;
+                top: 0.179rem;
+                text-align: center;
+            }
+        }
+    }
+
+}
+
+.title-tip {
+    display: inline-block;
+    width: 0.083rem;
+    height: 0.083rem;
+    .bg-cover;
+    margin-left: .08rem;
+    cursor: pointer;
+    position: relative;
+    top: .005rem;
+    background-image: url(/src/image/etc/invoice-tip.png);
+
+    &:hover {
+        &+.title-top-content {
+            display: block;
+        }
+    }
+}
+
+.title-top-content {
+    display: none;
+    background: rgb(38, 60, 125);
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
+    position: absolute;
+    left: 100%;
+    z-index: 9999;
+}
+
+.invoice-title-foot {
+    .box;
+    width: 9.552rem;
+    height: 1.797rem;
+    background-image: url(/src/image/etc/invoice-foot-bg.png);
+    top: 3.734rem;
+    left: .245rem;
+
+    .chart-tabs {
+        float: left;
+        position: relative;
+        width: 6.286rem;
+        height: 1.797rem;
+
+        &:after {
+            position: absolute;
+            content: "";
+            width: 0.005rem;
+            height: 1.026rem;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: linear-gradient(0deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, .95) 51%,
+                    rgba(255, 255, 255, 0) 100%);
+        }
+
+        &-title {
+            color: #4cb1ff;
+            font-size: 0.125rem;
+            position: relative;
+            top: .109rem;
+            left: .214rem;
+        }
+
+        .chart-tabs-link-box {
+            position: absolute;
+            width: .771rem*4;
+            height: .208rem;
+            left: 1.411rem;
+            top: 0;
+
+            .chart-tabs-link {
+                float: left;
+                width: .771rem;
+                line-height: .208rem;
+                .bg-cover;
+                color: #def1ff;
+                text-align: center;
+                cursor: pointer;
+                background-image: url(/src/image/etc/tab-item-bg.png);
+
+                &.active {
+                    background-image: url(/src/image/etc/tab-item-bg-active.png);
+                }
+            }
+        }
+
+    }
+
+}
+
+.invoice-ranking {
+    height: 1.797rem;
+    width: 2.443rem;
+    position: relative;
+    float: left;
+
+    &.ranking-tenantry {
+        &:after {
+            position: absolute;
+            content: "";
+            width: 0.005rem;
+            height: 1.026rem;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: linear-gradient(0deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, .95) 51%,
+                    rgba(255, 255, 255, 0) 100%);
+        }
+    }
+
+    &.ranking-project {
+        width: 3.1rem;
+    }
+
+    .invoice-ranking-title {
+        text-align: center;
+        font-size: 0.125rem;
+        color: #26bcf8;
+        margin-top: .146rem;
+    }
+
+    .invoice-ranking-content {
+        margin-top: .094rem;
+
+        tr {
+            height: .2rem;
+        }
+    }
+}
+
+.invoice-title-selector {
+    .box;
+    right: .11rem;
+    width: 2.6rem;
+    top: .245rem;
+
+    &-item {
+        display: inline-block;
+
+        select {
+            height: 0.188rem;
+            background-color: #0d1d4c;
+            border: solid 0.003rem #00b4ff;
+            color: #fff;
+        }
+
+        &.year-selector {
+            width: 0.51rem;
+        }
+
+        &.month-selector {
+            width: 0.51rem;
+        }
+
+        &.tenantry-selector {
+            width: 1.448rem;
+            height: .188rem;
+
+            .select2,
+            .select2-selection {
+                width: 1.448rem;
+                height: .188rem;
+                border: solid 0.003rem #00b4ff;
+                background-color: #0d1d4c;
+            }
+
+            .select2-selection__rendered {
+                height: .188rem;
+                line-height: .188rem;
+                color: #fff;
+            }
+
+            .select2-selection__arrow {
+                height: .188rem;
+                line-height: .188rem;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow b:after {
+                line-height: .188rem;
+                color: #fff;
+            }
+
+            .select2-container--default .select2-selection--single {
+                border: solid 0.003rem #00b4ff;
+                border-radius: 0 !important;
+            }
+        }
+    }
+}
+
+.invoice-ranking-content {
+    padding: 0 .182rem;
+
+    .ranking-td {
+        width: .128rem;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    tr {
+        color: #cacbcb;
+
+        &:nth-child(1) {
+            color: #ff0000;
+        }
+
+        &:nth-child(2) {
+            color: #ffa800;
+        }
+
+        &:nth-child(3) {
+            color: #00ff24;
+        }
+    }
+
+    td {
+        font-size: 0.094rem;
+        text-align: center;
+
+        div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 2.2rem;
+        }
+    }
+}
+
+.chart-tabs-tab {
+    .box;
+    left: .2rem;
+    top: .34rem;
+    width: 6.086rem;
+    height: 1.35rem;
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+
+.invoice-ranking-tab {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}

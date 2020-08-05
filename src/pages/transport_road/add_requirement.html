@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/add_requirement.js"></script>
+    <title>发货需求</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button  class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">新建发货需求</h2>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-heading panel-heading-divider">
+                            <b>基本信息</b>
+                            <input type="hidden" name="id">
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>录单分公司</label>
+                                    <select name="agencyId" id="agencyId" required
+                                            class="form-control input-sm select2">
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>所属项目</label>
+                                    <select name="projectId" id="projectId" required
+                                            class="form-control input-sm select2">
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>预计装车时间</label>
+                                    <input type="text" autocomplete="off" id="planStartTime1" name="planStartTime1" minlength="0"
+                                           maxlength="50"
+                                           readonly
+                                           parsley-trigger="change" required
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>预计到达时间</label>
+                                    <input type="text" name="planEndTime1" id="planEndTime1" minlength="0" maxlength="50"
+                                           parsley-trigger="change" required
+                                           readonly
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>调度员</label>
+                                    <select name="dispatcherId" id="dispatcherId" required
+                                            class="form-control input-sm select2">
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">需求车长(米)</label>
+                                    <select name="truckLength" id="truckLength" required
+                                         class="form-control input-sm select2">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>需求车型</label>
+                                    <select name="truckBox" id="truckBox" required
+                                            class="form-control input-sm select2">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <label class="control-label">发货清单号</label>
+                                    <textarea name="manifestNo" maxlength="200"
+                                              class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <label class="control-label">特殊需求</label>
+                                    <textarea name="truckDemand" maxlength="200"
+                                              class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="panel-heading panel-heading-divider">
+                            <b>收发货信息</b>
+                        </div>
+                        <div class="panel-body address-box-hook">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>发货单位</label>
+                                    <div class="input-group input-group-sm" id="loadingCorporationName">
+                                        <input type="text" autocomplete="off" readonly name="loadingCorporationName"
+                                               minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button">选择</button>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label"><span class="text-danger">*</span>发货详细地址</label>
+                                    <input type="text" name="loadingAddress" minlength="0" maxlength="300"
+                                           parsley-trigger="change" required
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                    <input type="hidden" name="loadingLongitude">
+                                    <input type="hidden" name="loadingLatitude">
+                                    <input type="hidden" name="loadingProvince">
+                                    <input type="hidden" name="loadingCity">
+                                    <input type="hidden" name="shipperCorporation">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">联系人</label>
+                                    <input type="text" autocomplete="off" name="customerPerson" minlength="0"
+                                           maxlength="50"
+                                           readonly
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">联系方式</label>
+                                    <input type="text" name="customerPhone" minlength="0" maxlength="50"
+                                           readonly
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>收货单位</label>
+                                    <div class="input-group input-group-sm"  id="corporationName">
+                                        <input type="text" autocomplete="off" readonly name="[address]corporationName"
+                                               minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change"
+                                               required
+                                               placeholder="请选择" class="form-control input-sm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button">选择</button>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label"><span class="text-danger">*</span>收货详细地址</label>
+                                    <input type="text" name="[address]addressDeatail"
+                                           minlength="0" maxlength="300"
+                                           parsley-trigger="change" required
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                    <input type="hidden" name="[address]longitude">
+                                    <input type="hidden" name="[address]latitude">
+                                    <input type="hidden" name="[address]province">
+                                    <input type="hidden" name="[address]city">
+                                    <input type="hidden" name="[address]customerAddressId">
+                                    <input type="hidden" name="[address]isLast" value="1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">联系人</label>
+                                    <input type="text" autocomplete="off" name="[address]person" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change"
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">联系方式</label>
+                                    <input type="text" name="[address]phone" minlength="0" maxlength="50"
+                                           parsley-trigger="change"
+                                           readonly
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                                <b>货物信息</b>
+                            </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                     <div class="col-sm-4">
+                                         <label class="control-label"><span class="text-danger">*</span>货物名称</label>
+                                            <input type="text"
+                                                   autocomplete="off"
+                                                   id="goodsName"
+                                                   name="[goods]goodsName"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>货物类别</label>
+                                            <select name="[goods]goodsCategory"
+                                                    required parsley-trigger="change" class="form-control input-sm">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>重量/体积</label>
+                                    <div class="row">
+                                        <div class="col-xs-8 pr0">
+                                            <input type="text"
+                                                   data-parsley-quantity
+                                                   autocomplete="off"
+                                                   id="goodsWeight"
+                                                   name="[goods]weightVolume"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                        <div class="col-xs-4 pl0">
+                                            <select name="[goods]goodsUnit" class="form-control input-sm">
+                                                <option value="1">吨</option>
+                                                <option value="2">立方</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

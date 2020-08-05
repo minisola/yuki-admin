@@ -1,0 +1,27 @@
+/*------------------------------------------------------------------
+  [Parsley]
+*/
+.parsley-errors-list{
+	margin:0 ;
+}
+.parsley-errors-list.filled{
+	margin-top: -3px !important;
+	padding: 2px 10px;
+	position: absolute;
+	z-index:1;
+	background-color: @parsley-error-bg;
+	color: @light-color;
+	
+	&:after{
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: -6px;
+		left: 20px;
+		.triangle(up, 7px, @parsley-error-bg);
+	}
+
+	> li{
+		list-style: none;
+	}
+}

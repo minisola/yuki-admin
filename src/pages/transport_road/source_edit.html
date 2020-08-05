@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/vue/vue.js"></script>
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/source_edit.js"></script>
+    <title>新建/编辑货源</title>
+</head>
+<body>
+<div class="zl-page-inner zl-page-pb" v-cloak>
+    <div class="page-head zl-page-head-fixed">
+        <button  class="btn btn-primary btn-sm go-back-hook"><i
+                class="mdi mdi-arrow-left"></i> 返回
+        </button>
+        <h2 class="page-head-title" :project="auth.projectType">
+            {{title}}
+        </h2>
+    </div>
+    <div class="panel" :style="{marginTop:d.id ? '85px' : '65px' }">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-"
+                          data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-heading panel-heading-divider">
+                            <b>基本信息</b>
+                            <input type="hidden" name="id">
+                            <input type="hidden" name="isUploginkJs" id="isUploginkJs">
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>所属项目</label>
+                                    <select name="projectId" id="projectId" v-model="d.projectId" required
+                                    class="form-control input-sm select2">
+                                    <option value="">请选择</option>
+                                    <option v-for="el in auth.projects" :value="el.id">{{el.projectName}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 xs-pb-10">
+                                    <label class="control-label"><span class="text-danger">*</span>开始装货时间</label>
+                                    <input type="text" autocomplete="off" id="planStartTime" name="planStartTime"
+                                           minlength="0"
+                                           maxlength="50"
+                                           readonly
+                                           v-model="d.planStartTime"
+                                           data-parsley-trigger="input" required
+                                           placeholder="请选择" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>货物类别</label>
+                                        <select name="goodsCategory"
+                                        v-model="d.goodsCategory"
+                                        required data-parsley-trigger="input" class="form-control input-sm">
+                                    <option value="">请选择</option>
+                                    <option v-for="(el,key) in auth.HWLB" :value="key">{{el}}</option>
+                                </select>
+                                    </div>
+
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>货物名称</label>
+                                            <input type="text"
+                                                   autocomplete="off"
+                                                   name="goodsName" minlength="0" maxlength="50"
+                                                   data-parsley-trigger="input" required
+                                                   placeholder="请输入" class="form-control input-sm" id="goodsName">
+                                        </div>
+                                        <div class="col-sm-4">
+                                                <label class="control-label"><span class="text-danger">*</span>剩余吨数</label>
+                                                <input type="text" autocomplete="off" name="goodsAmount" minlength="0"
+                                                       maxlength="50"
+                                                       data-parsley-trigger="input"
+                                                       placeholder="请输入" class="form-control input-sm" id="goodsAmount">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                    <label class="control-label"><span class="text-danger">*</span>运输单价（元）</label>
+                                                    <input type="text" autocomplete="off" name="transportUnitPrice" minlength="0"
+                                                           maxlength="50"
+                                                           data-parsley-trigger="input"
+                                                           placeholder="请输入" class="form-control input-sm" id="transportUnitPrice">
+                                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>发货单位</label>
+                                            <div class="input-group input-group-sm" id="loadingAddressId">
+                                                <input type="text" autocomplete="off" readonly name="loadingCorporationName"
+                                                       v-model="d.loadingCorporationName"
+                                                       minlength="0"
+                                                       maxlength="50"
+                                                       data-parsley-trigger="input" required
+                                                       placeholder="请选择" class="form-control input-sm">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-primary" @click="openAddressDialog(0)" type="button">选择</button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="control-label"><span class="text-danger">*</span>发货详细地址</label>
+                                            <input type="text" name="loadingAddress" minlength="0" maxlength="300"
+                                                   data-parsley-trigger="input" required
+                                                   v-model="d.loadingAddress"
+                                                   readonly
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>收货单位</label>
+                                            <div class="input-group input-group-sm" id="unloadAddressId">
+                                                <input type="text" autocomplete="off" readonly
+                                                       name="unloadCorporationName"
+                                                       minlength="0"
+                                                       maxlength="50"
+                                                       v-model="d.unloadCorporationName"
+                                                       data-parsley-trigger="input"
+                                                       required
+                                                       placeholder="请选择" class="form-control input-sm" id="unloadCorporationName">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-primary" @click="openAddressDialog(1)" type="button">选择</button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="control-label"><span class="text-danger">*</span>收货详细地址</label>
+                                            <input type="text" name="unloadAddress"
+                                                   minlength="0" maxlength="300"
+                                                   data-parsley-trigger="input" required
+                                                   v-model="d.unloadAddress"
+                                                   readonly
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>调度员</label>
+                                        <input type="text" name="dispatcherName" minlength="0" maxlength="50"
+                                            data-parsley-trigger="input"  required
+                                            placeholder="请输入" class="form-control input-sm" id="dispatcherName">
+                                    </div>
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>调度员手机号</label>
+                                            <input type="text" name="dispatcherPhone" minlength="0" maxlength="50"
+                                                data-parsley-trigger="input" data-parsley-contact  required
+                                                placeholder="请输入" class="form-control input-sm" id="dispatcherPhone">
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>可接单范围(KM)</label>
+                                    <input type="text" name="dispatcherName" minlength="0" maxlength="50"
+                                           data-parsley-trigger="input"  required
+                                           data-parsley-integerthanzero
+                                           placeholder="请输入" class="form-control input-sm" v-model="d.orderRange">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>结算方式</label>
+                                    <select class="form-control input-sm" required v-model="d.setterment">
+                                        <option value="">请选择</option>
+                                        <option value="0">
+                                            入厂（港）值结算
+                                        </option>
+                                        <option value="1">
+                                            出厂（港）值结算
+                                        </option>
+                                        <option value="2">
+                                            出厂（港）入厂（港）最小值结算
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">
+                                {{
+                                mode === "copy" ? "生成货源" : "保存"
+                                }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

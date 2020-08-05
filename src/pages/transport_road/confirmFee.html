@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/confirmFee.js"></script>
+    <title>确认费用</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">确认费用</h2>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-excluded="[disabled],:hidden" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <div class="panel-body">
+                        <div class="panel-heading panel-heading-divider">
+                                <b>货物信息</b>
+                            </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>货物名称</label>
+                                    <input type="text"
+                                           autocomplete="off"
+                                           id="goodsName"
+                                           name="[goods]goodsName"
+                                           parsley-trigger="change" required
+                                           placeholder="请输入" class="form-control input-sm">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>货物类别</label>
+                                    <select name="[goods]goodsCategory" id="goodsCategory"
+                                            required parsley-trigger="change" class="form-control input-sm">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>重量/体积</label>
+                                        <div class="row">
+                                            <div class="col-xs-8 pr0">
+                                                <input type="text"
+                                                       data-parsley-quantity
+                                                       autocomplete="off"
+                                                       id="weightVolume"
+                                                       name="[goods]weightVolume"
+                                                       parsley-trigger="change" required
+                                                       placeholder="请输入" class="form-control input-sm">
+                                            </div>
+                                            <div class="col-xs-4 pl0">
+                                                <select name="[goods]goodsUnit" class="form-control input-sm" id="goodsUnit">
+                                                    <option value="1">吨</option>
+                                                    <option value="2">立方米</option>
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                    <div class="col-sm-4">
+                                            <label class="control-label"><span class="text-danger">*</span>件数:</label>
+                                            <input type="text"
+                                                   autocomplete="off"
+                                                   name="[goods]goodsAmount" minlength="0" maxlength="50"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>包装</label>
+                                        <select name="[goods]goodsPacking"
+                                        required parsley-trigger="change" class="form-control input-sm">
+                                    <option value=""></option>
+                                </select>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading panel-heading-divider">
+                            <b>费用信息</b>
+                        </div>
+                        <div class="panel-body confirmFee">
+                            <div class="form-group">
+                                <div class="col-sm-12 fs16">
+                                    总运费
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>金额</label>
+                                    <input type="text" autocomplete="off" name="payFare" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change" required
+                                           data-parsley-price
+                                           placeholder="预付+到付+回单付" class="form-control input-sm" readonly>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                    <div class="col-sm-12 fs16">
+                                        预付
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>方式</label>
+                                        <select name="prepayType" class="form-control input-sm">
+                                            <option value="1">现金</option>
+                                            <option value="2">油卡</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" id="oilCardNo" style="display:none">
+                                            <label class="control-label"><span class="text-danger">*</span>油卡号</label>
+                                            <input type="text" autocomplete="off" name="oilCardNo" minlength="0"
+                                                   maxlength="50"
+                                                   parsley-trigger="change" required
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                        <div class="col-sm-4">
+                                                <label class="control-label"><span class="text-danger">*</span>金额</label>
+                                                <input type="text" autocomplete="off" name="prepayMoney" minlength="0"
+                                                       maxlength="50"
+                                                       parsley-trigger="change" required
+                                                       data-parsley-price
+                                                       placeholder="请输入" class="form-control input-sm">
+                                            </div>
+                                </div>
+                                <div class="form-group">
+                                        <div class="col-sm-12 fs16">
+                                            到付
+                                        </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>金额</label>
+                                        <input type="text" autocomplete="off" name="arriveMoney" minlength="0"
+                                               maxlength="50"
+                                               parsley-trigger="change" required
+                                               data-parsley-price
+                                               placeholder="请输入" class="form-control input-sm">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group">
+                                        <div class="col-sm-12 fs16">
+                                            回单付
+                                        </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label"><span class="text-danger">*</span>是否有回单</label>
+                                        <select name="isReceipt" class="form-control input-sm">
+                                                <option value="1">是</option>
+                                                <option value="2">否</option>
+                                            </select>
+                                    </div>
+                                    <div class="col-sm-4" id="receiptMoney">
+                                            <label class="control-label"><span class="text-danger">*</span>金额</label>
+                                            <input type="text" autocomplete="off" name="receiptMoney" minlength="0"
+                                                   maxlength="50"
+                                                   parsley-trigger="change" required
+                                                   data-parsley-price
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="pay-box-hook">
+
+                            </div>
+
+                        </div>
+
+                        <div class="zl-page-handler text-center">
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script id="temp" type="text/html">
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/fee.js"></script>
+    <title>费用登记</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">费用登记 <b></b></h2>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="container">
+                    <form id="form" action="#" data-parsley-namespace="data-parsley-" data-parsley-validate=""
+                          novalidate="" class="form-horizontal group-border-dashed zl-form">
+                        <input type="hidden" name="id">
+                        <div class="panel-heading panel-heading-divider">
+                            <b>应收费用/进项金额</b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>应收单价(元)
+                                    </label>
+                                    <input type="text" autocomplete="off" name="feePrice" minlength="0"
+                                           maxlength="50"
+                                           data-parsley-price
+                                           required
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label"><span class="text-danger">*</span>数量
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-xs-6 pr0">
+                                            <input type="text" autocomplete="off" name="feeAmount" minlength="0"
+                                                   maxlength="50"
+                                                   required
+                                                   data-parsley-quantity
+                                                   parsley-trigger="change"
+                                                   placeholder="请输入" class="form-control input-sm">
+                                        </div>
+                                        <div class="col-xs-6 pl0">
+                                            <select name="feeUnit" class="form-control input-sm">
+                                                <option value="1">吨</option>
+                                                <option value="2">车</option>
+                                                <option value="3">立方</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">应收总运费(元)</label>
+                                    <input type="text" autocomplete="off"
+                                           name="receiveFare" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change"
+                                           placeholder="系统自动计算" readonly class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">进项金额(元)</label>
+                                    <input type="text" autocomplete="off" name="incomeMoney" minlength="0"
+                                           maxlength="50"
+                                           data-parsley-price
+                                           parsley-trigger="change"
+                                           placeholder="如有进项请输入,未输入默认为0" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-heading panel-heading-divider">
+                            <b>其他应付费用</b>
+                        </div>
+                        <div class="panel-body" id="feeBox"></div>
+
+
+                        <div class="panel-heading panel-heading-divider">
+                            <b>货损货差</b>
+                            <input type="hidden" name="[contract]id">
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">类型
+                                    </label>
+                                    <select class="form-control input-sm" name="lossDamageType">
+                                        <option value="">请选择</option>
+                                        <option value="1">货损</option>
+                                        <option value="2">货差</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <div class="col-sm-4">
+                                    <label class="control-label">阶段
+                                    </label>
+                                    <select class="form-control input-sm" name="lossDamageStage">
+                                        <option class="payType-0" value="">请选择</option>
+                                        <option class="payType-1" value="0">总费用</option>
+                                        <option class="payType-0" value="1">预付</option>
+                                        <option class="payType-0" value="2">到付</option>
+                                        <option class="payType-0" value="3">回单付</option>
+                                    </select>
+                                    <div class="currentLoss-hook" style="display: none">该阶段最大货损货差金额为 <b class="text-primary"></b> 元</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">到货数量
+                                    </label>
+                                    <input type="text" autocomplete="off" name="lossDamageReceiveAmount" minlength="0"
+                                           maxlength="50"
+                                           data-parsley-price
+                                           parsley-trigger="change"
+                                           placeholder="请输入" class="form-control input-sm">
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">货损货差数量</label>
+                                    <input type="text" autocomplete="off"
+                                           name="lossDamageAmount" minlength="0"
+                                           maxlength="50"
+                                           parsley-trigger="change"
+                                           placeholder="填写到货数量自动计算" readonly class="form-control input-sm">
+                                    <div>
+                                        货损货差数量 = 发货数量 - 到货数量
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label">金额</label>
+                                    <input type="text" autocomplete="off" name="lossDamageMoney" minlength="0"
+                                           maxlength="50"
+                                           data-parsley-price
+                                           required
+                                           parsley-trigger="change"
+                                           placeholder="货损货差金额" class="form-control input-sm">
+                                    <div>
+                                        支付对应阶段运费时将会减去该货损货差金额
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <label class="control-label">备注</label>
+                                    <textarea name="lossDamageRemark" maxlength="200"
+                                              class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="zl-page-handler text-center">
+                            <a class="btn btn-space btn-default go-back-hook">取消
+                            </a>
+                            <button type="submit"
+                                    class="btn btn-space btn-primary">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="//webapi.amap.com/maps?v=1.4.0&key=9fcb8ae939958606750baa42ef4c6a1d&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.CitySearch"></script>
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/detail.js"></script>
+    <title>运单详情</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb" style="opacity:0">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">运单详情： <b></b></h2>
+    </div>
+    <div class="panel" style="margin-top: 120px;">
+    <div class="tab-container">
+            <ul class="nav nav-tabs zl-tabs" style="position: fixed;
+            left: 10px;
+            right: 10px;
+            background: #fff;
+            z-index: 9;
+            top: 90px;">
+                <li class="active"><a href="#home" data-toggle="tab">运单信息</a></li>
+                <li><a href="#address" data-toggle="tab">附件</a></li>
+                <li><a href="#path" id="viewPath" data-toggle="tab">运输轨迹</a></li>
+            </ul>
+            <div class="tab-content" style="padding:0;margin:0;">
+                <div id="home" class="tab-pane cont active">
+                    <div class="panel-body" id="info">
+                        <div class="row">
+                            <div class="container form-horizontal group-border-dashed zl-form">
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>状态信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>运单来源：<span class="text-muted">
+                                                {{resource | waybillResouce}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>创建人：<span class="text-muted">{{userName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>创建时间：<span class="text-muted">{{createTime}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>运输状态：<span class="text-muted">
+                                                 {{if transportStatus==1}} 未开始{{/if}}
+                                                {{if transportStatus==2}} 在途中{{/if}}
+                                                {{if transportStatus==3}} 已完成{{/if}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>运单状态：<span class="text-muted">
+                                                <!--运单状态(-1:草稿 0:未提交 1:审批中 2:审批通过 3:审批不通过 4:审批驳回 5:已撤回 9:已删除)-->
+                                                 {{if auditStatus==-1}} 草稿{{/if}}
+                                                {{if auditStatus==0}} 未提交{{/if}}
+                                                {{if auditStatus==1}} 审批中{{/if}}
+                                                {{if auditStatus==2}} 审批通过{{/if}}
+                                                {{if auditStatus==3}} 审批不通过{{/if}}
+                                                {{if auditStatus==4}} 审批驳回{{/if}}
+                                                {{if auditStatus==5}} 已撤回{{/if}}
+                                                {{if auditStatus==9}} 已删除{{/if}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>结算状态：<span class="text-muted">
+                                                  {{if settleStatus==0}} 未结算{{/if}}
+                                                {{if settleStatus==1}} 部分结算{{/if}}
+                                                {{if settleStatus==2}} 已结算{{/if}}
+                                                </span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>定位状态：<span class="text-muted">
+                                               {{locateStatusString}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>保单状态：<span class="text-muted">
+                                                <!--保单状态(0:未投保 1:不投保 2:投保受理成功 3:投保受理失败 4:系统异常 5:投保成功 6:投保失败)-->
+                                                  {{if policyStatus==0}} 未投保{{/if}}
+                                                {{if policyStatus==1}} 不投保{{/if}}
+                                                {{if policyStatus==2}} 投保中{{/if}}
+                                                {{if policyStatus==3}} 投保中{{/if}}
+                                                {{if policyStatus==4}} 投保中{{/if}}
+                                                {{if policyStatus==5}} 投保成功{{/if}}
+                                                {{if policyStatus==6}} 投保中{{/if}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                        <div>保单号：<span class="text-muted">
+                                                {{if policyNo}}
+                                               {{policyNo}}
+                                            {{else /}}
+                                            {{policyNo || "————"}}
+                                            {{/if}}
+                                                </span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>基本信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>所属项目：<span class="text-muted" id="projectId">{{projectName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>单据日期：<span class="text-muted">{{billDate.split(" ")[0]}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>协议单号：<span class="text-muted">{{driverContractCode}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>装车时间：<span class="text-muted">{{planStartTime}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>到达时间：<span class="text-muted">{{planEndTime}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>服务项：<span class="text-muted">
+                                                  {{if isLocate==1}}
+                                                  <i class="text-success mdi mdi-check-circle"></i> 定位
+                                                {{/if}}
+                                                {{if isPolicy==1 }}
+                                                   <i class="text-success mdi mdi-check-circle"></i> 保险
+                                                {{/if}}
+                                                {{if isUpetc==1 }}
+                                                <i class="text-success mdi mdi-check-circle"></i> ETC服务
+                                             {{/if}}
+
+                                                </span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                            <div class="col-sm-4">
+
+                                                    <div>实际发车时间：<span class="text-muted" id="actualStartTime">{{actualStartTime}}</span></div>
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                        <div>实际到达时间：<span class="text-muted" id="actualEndTime">{{actualEndTime}}</span></div>
+                                                    </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>发货清单号：<span class="text-muted">{{manifestNo}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div>备注：<span class="text-muted">{{remark}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>收/发货信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>发货单位：<span class="text-muted">{{shipperCorporationName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>发货详细地址：<span class="text-muted">{{loadingAddress}}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>联系人：<span class="text-muted">{{shipperPerson}}</span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>联系方式：<span class="text-muted">{{shipperPhone}}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>收货单位：<span class="text-muted">{{unloadAddressList[0].corporationName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>收货详细地址：<span class="text-muted">{{unloadAddressList[0].addressDeatail}}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>联系人：<span class="text-muted">{{unloadAddressList[0].person}}</span></div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div>联系方式：<span class="text-muted">{{unloadAddressList[0].phone}}</span></div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                    <div class="panel-heading panel-heading-divider">
+                                        <b>货物信息</b>
+                                    </div>
+                                    <div class="panel-body">
+                                    <div class="form-group">
+
+                                        <div class="col-sm-4">
+                                            <div>货物名称：<span class="text-muted">{{goodsLists[0].goodsName}}</span></div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div>货物类别：<span class="text-muted">{{goodsLists[0].goodsCategoryName}}</span></div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div>件数：<span class="text-muted">{{goodsLists[0].goodsAmount}}</span></div>
+                                        </div>
+
+                                    </div>
+                                        <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>包装：<span class="text-muted">
+                                                  {{goodsLists[0].goodsPackingName || goodsLists[0].goodsPacking}}
+                                                </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>重量/体积：<span class="text-muted">
+                                                {{goodsLists[0].goodsWeight/1000 || goodsLists[0].goodsVolume}}
+                                                {{ if goodsLists[0].goodsWeight}} 吨
+                                                {{else /}}
+                                                立方
+                                                {{/if}}
+
+                                            </span></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    {{ if resource==4}}
+                                    <div class="panel-heading panel-heading-divider">
+                                            <b>过磅信息</b>
+                                        </div>
+                                        <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="col-sm-4 pd10">
+                                                        <div>港口吨数：<span class="text-muted">{{loadingGoodsAmount}}</span></div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div>
+                                                            单价:<span class="text-muted">{{transportUnitPrice}}</span></div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div>港口预计运费：<span class="text-muted" id="planFare1"></span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                        <div class="col-sm-4 pd10">
+                                                            <div>厂内吨数：<span class="text-muted">{{unloadGoodsAmount}}</span></div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div>
+                                                                单价:<span class="text-muted">{{transportUnitPrice}}</span></div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div>厂内预计运费：<span class="text-muted" id="planFare2"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <div class="col-sm-4 pd10">
+                                                                <div>对账吨数：<span class="text-muted">{{feeAmount}}</span></div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div>
+                                                                    单价:<span class="text-muted">{{actualUnitPrice}}</span></div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div>实际运费：<span class="text-muted">{{payFare}}</span></div>
+                                                            </div>
+                                                        </div>
+                                        </div>
+                                        {{/if}}
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>车辆/司机/收款人信息</b>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-4 pd10">
+                                            <div>车牌号码：<span class="text-muted">{{plateNo}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                车型：<span class="text-muted">{{truckBoxName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>车主：<span class="text-muted">{{owner}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <div class="col-sm-4">
+                                            <div>车牌颜色：<span class="text-muted">
+                                                {{if plateType==1}}
+                                                蓝色
+                                                {{else /}}
+                                                黄色
+                                                {{/if}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>道路运输许可证：<span class="text-muted">{{transportNo}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>车辆准牵引总质量(吨)：<span class="text-muted">{{truckMaxWeight}}</span></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group" >
+                                            <div class="col-sm-4 contact">
+
+                                                <div>载重：<span class="text-muted">{{if truckTonnage!=-1}}{{truckTonnage/1000}}  吨 {{/if}}</span></div>
+
+                                            </div>
+                                            <div class="col-sm-4 contact">
+                                                <div>车辆长度：<span class="text-muted">{{if truckLength!=-1}}{{truckLength/1000}}米 {{/if}}</span></div>
+                                            </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>
+                                                司机姓名：<span class="text-muted">{{driverName}}</span></div>
+                                        </div>
+
+                                        <div class="col-sm-4 contact">
+                                            <div>
+                                                联系电话：<span class="text-muted">{{driverPhone}}</span></div>
+                                        </div>
+
+
+                                        <div class="col-sm-4">
+                                            <div>
+                                                驾驶证号：<span class="text-muted">{{driverLicense}}</span></div>
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
+
+                                            <div class="col-sm-4 qualification">
+                                                <div>
+                                                    从业资格证：<span class="text-muted">{{qualificationCertificate}}</span></div>
+                                            </div>
+
+                                        </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>
+                                                收款户名：<span class="text-muted">{{receiptName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                对私/对公：<span class="text-muted">{{receiptDirection==1 ? '对私' : '对公'}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                银行卡号：<span class="text-muted">{{receiptCard}}</span></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>
+                                                开户行：<span class="text-muted">{{receiptBankName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                身份证号：<span class="text-muted">{{receiptIdentity}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                预留手机号：<span class="text-muted">{{receiptPhone}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>费用信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    {{if isFreeCarrier!=1}}
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>应收单价：<span class="text-muted">{{feePrice |formatMoney }} 元</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>数量：<span class="text-muted">{{feeAmount}}
+                                            {{if feeUnit==1}}吨{{/if}}
+                                            {{if feeUnit==2}}车{{/if}}
+                                            {{if feeUnit==3}}立方{{/if}}
+                                            {{if feeUnit==4}}件{{/if}}
+                                            </span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>应收总运费：<span class="text-muted">{{receiveFare|formatMoney}} 元</span></div>
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                    {{if incomeMoney != 0}}
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>进项：<span class="text-muted">{{incomeMoney |formatMoney }} 元</span></div>
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                    <div class="form-group">
+                                        {{if payType == 0}}
+                                        <div class="col-sm-4">
+                                            <div>
+                                                预付金额：<span class="text-muted">{{prepayMoney|formatMoney}} 元</span></div>
+                                        </div>
+                                        {{if prepayType==2}}
+                                        <div class="col-sm-4">
+                                            <div>油卡卡号：<span class="text-muted">{{oilCardNo}}</span></div>
+                                        </div>
+                                        {{/if}}
+                                        {{if prepayType==3}}
+                                        <div class="col-sm-4">
+                                                <div>预付类型：<span class="text-muted">线上油卡</span></div>
+                                            </div>
+                                        {{/if}}
+                                        {{if prepayType==2}}
+                                        <div class="col-sm-4">
+                                                <div>预付类型：<span class="text-muted">线下油卡</span></div>
+                                            </div>
+                                        {{/if}}
+                                        {{if prepayType==1}}
+                                            {{if prepayMoney!==0}}
+                                        <div class="col-sm-4">
+                                                <div>预付类型：<span class="text-muted">现金</span></div>
+                                            </div>
+                                            {{/if}}
+                                            {{if prepayMoney==0}}
+                                        <div class="col-sm-4">
+                                                <div>预付类型：<span class="text-muted">-</span></div>
+                                            </div>
+                                            {{/if}}
+                                        {{/if}}
+
+                                    </div>
+                                    <div class="form-group">
+                                            <div class="col-sm-4">
+                                                    <div>到付金额：<span class="text-muted">{{arriveMoney|formatMoney }} 元</span></div>
+                                                </div>
+                                        <div class="col-sm-4">
+                                            <div>
+                                                回单付金额：<span class="text-muted">{{receiptMoney|formatMoney}} 元</span></div>
+                                        </div>
+                                        {{/if}}
+
+                                        <div class="col-sm-4">
+                                            <div>
+                                                应付总金额：<span class="text-muted">{{payFare|formatMoney}} 元</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-heading panel-heading-divider">
+                                    <b>额外费用信息</b>
+                                </div>
+                                <div class="panel-body">
+                                    {{each otherPayFareList}}
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>费用类型：<span class="text-muted">{{$value.type | formatFeeType}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>金额：<span class="text-muted">{{$value.money | formatMoney }} 元</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <div>
+                                                收款户名：<span class="text-muted">{{$value.receiptName}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>银行卡号：<span class="text-muted">{{$value.receiptCard}}</span></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div>开户行：<span class="text-muted">{{$value.receiptBankName}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-8">
+                                            <div>
+                                                身份证号：<span class="text-muted">{{$value.receiptIdentity}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div>备注：<span class="text-muted">{{$value.remark}}</span></div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="address" class="tab-pane cont">
+                    <div class="panel-body">
+                        <div class="panel-body" id="file">
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src=""
+                                             class="img-thumbnail zl-view-hook">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">身份证(正面)</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src=""
+                                             class="img-thumbnail zl-view-hook">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">身份证(反面)</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src=""
+                                             class="img-thumbnail zl-view-hook">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">驾驶证</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src=""
+                                             class="img-thumbnail zl-view-hook">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">行驶证</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src="/src/image/none.png" data-ignore="true" class="img-thumbnail">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">道路运输许可证</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src=""
+                                             class="img-thumbnail zl-view-hook">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">货物运输协议</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 file-hook">
+                                <div class="list-group text-center zl-file-box">
+                                    <div class="list-group-item zl-file-content">
+                                        <img src="/src/image/none.png" data-ignore="true" alt="Placeholder"
+                                             class="img-thumbnail">
+                                        <span class="img-pad"></span>
+                                    </div>
+                                    <div class="list-group-item fileName">回单</div>
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="" class="btn btn-default">下载</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="path" class="tab-pane cont">
+                    <div class="panel-body">
+                        <div>
+                            <iframe src="" style="width:100%;height:600px" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="zl-page-handler text-center">
+    <a class="btn btn-space btn-default go-back-hook">关闭
+    </a>
+</div>
+</div>
+</body>
+</html>

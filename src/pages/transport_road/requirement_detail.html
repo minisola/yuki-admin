@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--include "../common/header.html"-->
+    <script src="/src/libs/requirejs/require.js" id="script" defer async="true"
+            data-main="/src/js/config.js"
+            require-module="/src/js/transport_road/requirement_detail.js"></script>
+    <title>发货需求详情</title>
+</head>
+<body>
+
+<div class="zl-page-inner zl-page-pb">
+    <div class="page-head zl-page-head-fixed">
+        <button class="btn btn-primary btn-sm go-back-hook"><i class="mdi mdi-arrow-left"></i> 返回</button>
+        <h2 class="page-head-title">需求详情 <b></b></h2>
+    </div>
+    <div class="panel" style="margin-top: 84px;">
+        <div class="panel-body" id="info">
+
+        </div>
+    </div>
+    <div class="zl-page-handler text-center">
+        <a class="btn btn-space btn-default go-back-hook">关闭
+        </a>
+    </div>
+</div>
+<script type="text/html" id="temp">
+    <div class="row">
+        <div class="container form-horizontal group-border-dashed zl-form">
+            <div class="panel-heading panel-heading-divider">
+                <b>状态信息</b>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>录单分公司：<span class="text-muted">
+                                                {{agencyName}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>项目名称：<span class="text-muted">{{projectName}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>预计装车时间：<span class="text-muted">{{planStartTime}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>预计到达时间：<span class="text-muted">
+                                                {{planEndTime}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>调度员姓名：<span class="text-muted">
+                                                {{dispatcherName}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>需求车长：<span class="text-muted">
+                                                {{truckLength/1000}} 米
+                                                </span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>需求车型：<span class="text-muted">
+                                                {{truckBoxName}}
+                                            </span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div>发货清单号：<span class="text-muted">
+                                                {{manifestNo}}
+                                                </span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div>特殊需求：<span class="text-muted">
+                                                {{truckDemand}}
+                                                </span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading panel-heading-divider">
+                <b>收/发货信息</b>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>发货单位：<span class="text-muted">{{loadingCorporationName}}</span></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div>发货详细地址：<span class="text-muted">{{loadingAddress}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>联系人：<span class="text-muted">{{customerPerson}}</span></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div>联系方式：<span class="text-muted">{{customerPhone}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>收货单位：<span class="text-muted">
+                                                    {{addressList[0].corporationName}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div>收货详细地址：<span class="text-muted">
+                                                 {{addressList[0].addressDeatail}}
+                                            </span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>联系人：<span class="text-muted">
+                                                {{addressList[0].person}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div>联系方式：<span class="text-muted">
+                                                {{addressList[0].phone}}
+                                            </span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-heading panel-heading-divider">
+                <b>货物信息</b>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>货物名称：<span class="text-muted">
+                                {{addressList[0].goodsList[0].goodsName}}
+                                            </span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>货物类型：<span class="text-muted">
+                            {{addressList[0].goodsList[0].goodsCategoryName}}
+                                            </span></div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-sm-4">
+                        <div>重量/体积：<span class="text-muted">
+                            {{ if addressList[0].goodsList[0].goodsUnit==1}}
+                                        {{addressList[0].goodsList[0].weightVolume/1000}}
+                                                {{else /}}
+                                                                    {{addressList[0].goodsList[0].weightVolume}}
+
+                                                {{/if}}
+                                                {{ if addressList[0].goodsList[0].goodsUnit==1}} 吨
+                                                {{else /}}
+                                                立方
+                                                {{/if}}
+                                            </span></div>
+                    </div>
+                    <% if (state>=3) { %>
+                    <div class="col-sm-4">
+                        <div>包装：<span class="text-muted">
+                                    {{addressList[0].goodsList[0].goodsPackingName}}
+                                                </span></div>
+                    </div>
+                    <% } %>
+                </div>
+
+            </div>
+            <% if (state>=2) { %>
+            <div class="panel-heading panel-heading-divider">
+                <b>车辆/司机/收款人信息</b>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>车牌号码：<span class="text-muted">{{d.plateNo}}</span></div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div>载重：<span class="text-muted">{{d.truckTonnage/1000}} 吨</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>车辆长度：<span class="text-muted">{{d.truckLength/1000}} 米</span></div>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>
+                            车型：<span class="text-muted">{{d.truckBoxName}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>车主：<span class="text-muted">{{d.owner}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>
+                            司机姓名：<span class="text-muted">{{d.driverName}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            联系电话：<span class="text-muted">{{d.driverPhone}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            驾驶证号：<span class="text-muted">{{d.driverLicense}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>
+                            收款户名：<span class="text-muted">{{d.receiptName}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            身份证号：<span class="text-muted">{{d.receiptIdentity}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            对私/对公：<span class="text-muted">{{d.receiptDirection == 1 ? "对私":"对公"}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>
+                            银行卡号：<span class="text-muted">{{d.receiptCard}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            开户行：<span class="text-muted">{{d.receiptBankName}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            预留手机号：<span class="text-muted">{{d.receivePhone || d.receiptPhone}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div>
+                            备注：<span class="text-muted">{{d.remark}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% if ( state>=3 ) { %>
+
+            <div class="panel-heading panel-heading-divider">
+                <b>费用信息</b>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>总运费：<span class="text-muted">{{d.payFare |formatMoney }} 元</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>预付金额：<span class="text-muted">{{d.prepayMoney | formatMoney}} 元 ( {{if d.prepayType==1}}现金{{/if}}{{if d.prepayType==2}}油卡{{/if}} )
+                                            </span></div>
+                    </div>
+                    {{if d.prepayType==2}}
+                    <div class="col-sm-4">
+                        <div>油卡卡号：<span class="text-muted">{{d.oilCardNo}}</span></div>
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>到付金额：<span class="text-muted">{{d.arriveMoney|formatMoney }} 元</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div>
+                            是否有回单：<span class="text-muted">{{d.receiptMoney>=0 ? "是" :"否"}}</span></div>
+                    </div>
+                    <% if ( d.receiptMoney>=0 ) { %>
+                    <div class="col-sm-4">
+                        <div>
+                            回单付金额：<span class="text-muted">{{d.receiptMoney|formatMoney}} 元</span></div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</script>
+</body>
+</html>
