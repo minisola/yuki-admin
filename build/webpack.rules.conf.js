@@ -1,17 +1,10 @@
-const extractTextPlugin = require("extract-text-webpack-plugin");
+// const extractTextPlugin = require("extract-text-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const rules = [
-  // {
-  //     test: /\.(css|scss|sass)$/,
-  //     // 区别开发环境和生成环境
-  //     use: process.env.NODE_ENV === "development" ?
-  //     ["style-loader", "css-loader", "sass-loader", "postcss-loader"] :
-  //     ["style-loader",miniCssExtractPlugin.loader, "css-loader", "sass-loader", "postcss-loader"]
-  // },
   {
     test: /\.(less|css)$/,
-    // 区别开发环境和生成环境
+    // 区别开发环境和生产环境
     use:
       process.env.NODE_ENV === "development"
         ? ["style-loader", "css-loader", "less-loader"]
