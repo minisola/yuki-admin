@@ -1,39 +1,48 @@
-// const extractTextPlugin = require("extract-text-webpack-plugin");
-const miniCssExtractPlugin = require("mini-css-extract-plugin");
+const extractTextPlugin = require('extract-text-webpack-plugin')
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const rules = [
   {
-    test: /\.(less|css)$/,
-    // 区别开发环境和生产环境
+    test: /\.(css|scss|sass)$/,
+    // 区别开发环境和生成环境
     use:
-      process.env.NODE_ENV === "development"
-        ? ["style-loader", "css-loader", "less-loader"]
-        : [
-            miniCssExtractPlugin.loader,
-            "css-loader",
-            "less-loader",
-          ],
+      process.env.NODE_ENV === 'development'
+        ? ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
+        : ['style-loader', miniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
   },
+  // {
+  //   test: /\.(less|css)$/,
+  //   // 区别开发环境和生产环境
+  //   use:
+  //     process.env.NODE_ENV === "development"
+  //       ? ["style-loader", "css-loader", "less-loader"]
+  //       : [
+  //           miniCssExtractPlugin.loader,
+  //           "css-loader",
+  //           "less-loader",
+  //         ],
+  // },
   {
     test: /\.js$/,
     use: [
       {
-        loader: "babel-loader"
+        loader: 'babel-loader',
       },
     ],
     // 不检查node_modules下的js文件
-    exclude: /node_modules/
+    exclude: /node_modules/,
   },
   {
     test: /\.(png|jpg|gif)$/,
     use: [
       {
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 5 * 1024, //小于这个时将会已base64位图片打包处理
           // 图片文件输出的文件夹
-          publicPath: "/assets/images/",
-          outputPath: "/assets/images/",
+          publicPath: 'assets/images/',
+          outputPath: 'assets/images/',
+          minimize: true,
         },
       },
     ],
@@ -42,11 +51,12 @@ const rules = [
     test: /\.html$/,
     // html中的img标签
     use: {
-      loader: "html-loader",
+      loader: 'html-loader',
       options: {
-        attrs: ["img:src", "img:data-src", "audio:src"],
-        publicPath: "/assets/images/",
-        outputPath: "/assets/images/",
+        attrs: ['img:src', 'img:data-src', 'audio:src'],
+        limit: 5 * 1024, //小于这个时将会已base64位图片打包处理
+        publicPath: 'assets/images/',
+        outputPath: 'assets/images/',
         minimize: true,
       },
     },
@@ -55,15 +65,15 @@ const rules = [
     test: /\.(eot|woff2?|ttf|svg)$/,
     use: [
       {
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
-          name: "[name].[ext]",
+          name: '[name].[ext]',
           limit: 5000, // fonts file size <= 5KB, use 'base64'; else, output svg file
-          publicPath: "/assets/fonts/",
-          outputPath: "/assets/fonts/"
-        }
-      }
-    ]
-  }
-];
-module.exports = rules;
+          publicPath: 'assets/fonts/',
+          outputPath: 'assets/fonts/',
+        },
+      },
+    ],
+  },
+]
+module.exports = rules

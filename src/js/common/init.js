@@ -8,7 +8,7 @@ import '@/libs/select2/js/select2.full'
 import '@/libs/FlexDate/dist/js/flexDate'
 import '@/libs/flatpickr/flatpickr'
 
-import '@/less/style.less'
+// import '@/less/style.less'
 import '@/libs/flexdate/dist/css/flexDate.css'
 import '@/libs/flatpickr/flatpickr.css'
 
