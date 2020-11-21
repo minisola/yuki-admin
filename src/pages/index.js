@@ -1,9 +1,10 @@
+import { pageInit } from '@/common/init'
 import '@/scss/style.scss'
-import './index.scss'
 import md5 from 'md5'
-import {pageInit} from '@/js/common/init';
+import './index.scss'
 
 pageInit()
+
 //防止页面被嵌套
 if (window.top != window) {
   window.top.location = window.location
@@ -49,10 +50,10 @@ $(function () {
     window.loading = layer.msg('登录中...', { icon: 16, time: 0, shade: [0.3, '#000'] })
     $.ajax({
       type: 'POST',
-      url: apiUrl + '/login',
+      url: env.apiUrl + '/login',
       data: {
         account: account,
-        pwd: md5(pwd), 
+        pwd: md5(pwd),
       },
       success: function (res) {
         _u.ajaxData(res, function () {
@@ -63,18 +64,18 @@ $(function () {
           }
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('user', JSON.stringify(res.data))
-          location.href = '/pages/layout.html'
+          location.href = '/pages/main.html'
         })
       },
     })
   }
 
   //重置密码
-  $('#resetPw').on('click',function () {
+  $('#resetPw').on('click', function () {
     window.resetPwDialog = layer.open({
       type: 1,
       shade: 0.3,
-      area: ['320px', '380px'],
+      area: ['320px', '330px'],
       title: false, //不显示标题
       content: $('#resetForm'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
       success: function () {
@@ -156,7 +157,7 @@ var ResetPw = function () {
 
 ResetPw.prototype._init = function () {
   var that = this
-  $('.sendCode-hook').on('click',function () {
+  $('.sendCode-hook').on('click', function () {
     if (that.checkAccount()) {
       that.showLoading('发送中...')
       $.ajax({
@@ -179,7 +180,7 @@ ResetPw.prototype._init = function () {
     }
   })
 
-  $('.reset-submit-hook').on('click',function () {
+  $('.reset-submit-hook').on('click', function () {
     if (that.checkAccount() && that.checkCode() && that.checkPw()) {
       that.showLoading('处理中...')
       $.ajax({

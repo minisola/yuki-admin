@@ -8,7 +8,13 @@ const rules = [
     use:
       process.env.NODE_ENV === 'development'
         ? ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
-        : ['style-loader', miniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
+        : [
+            'style-loader',
+            miniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader',
+            'postcss-loader',
+          ],
   },
   // {
   //   test: /\.(less|css)$/,
@@ -69,7 +75,8 @@ const rules = [
         options: {
           name: '[name].[ext]',
           limit: 5000, // fonts file size <= 5KB, use 'base64'; else, output svg file
-          publicPath: 'assets/fonts/',
+          // publicPath: 'assets/fonts/',
+          useRelativePath: true, //使用相对路径
           outputPath: 'assets/fonts/',
         },
       },

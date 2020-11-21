@@ -1,5 +1,8 @@
-@import "./bootstrap-4.5.0/scss/bootstrap.scss";
+@import './bootstrap-4.5.0/scss/bootstrap.scss';
 
 /* 第三方组件 */
-@import "../libs/layui/css/layui.css";
-@import "../libs/layer/theme/default/layer.css";
+@import '../libs/layui/css/layui.css';
+@import '../libs/layer/theme/default/layer.css';
+$fa-font-path: './fontawesome-free-5.15.1-web/webfonts/';
+@import './fontawesome-free-5.15.1-web/scss/fontawesome.scss';
+@import './fontawesome-free-5.15.1-web/scss/solid.scss';

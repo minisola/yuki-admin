@@ -12,16 +12,14 @@
   <body>
     <div class="zl-login-bg">
       <div class="row">
-        <div class="brand-info  col-lg-8 col-md-7 col-sm-7">
+        <div class="brand-info col-lg-8 col-md-7 col-sm-7">
           <dl class="">
             <dt>
               <div class="brand animated fadeIn">
                 <h1 class="">管理运营系统</h1>
               </div>
             </dt>
-            <dd class="animated fadeIn">
-                Always believe that good things will happen
-            </dd>
+            <dd class="animated fadeIn">Always believe that good things will happen</dd>
           </dl>
         </div>
       </div>
@@ -33,31 +31,49 @@
             <h2 class="xs-mb-15">登录</h2>
             <form action="" onsubmit="return false;" method="post" id="loginForm">
               <div class="form-group">
-                <input type="text" class="form-control" id="account" name="account" placeholder="请输入用户名" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="account"
+                  name="account"
+                  placeholder="请输入用户名"
+                />
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="请输入密码" />
+                <input
+                  type="password"
+                  class="form-control"
+                  id="pwd"
+                  name="pwd"
+                  placeholder="请输入密码"
+                />
               </div>
               <div class="col-xs-12">
                 <div class="form-group">
                   <div class="be-checkbox row justify-content-between">
                     <div class="col">
-                      <input type="checkbox" id="remember" />
-                      <label for="remember">记住用户名</label>
+                      <label for="remember">
+                        <input type="checkbox" id="remember" />记住用户名</label
+                      >
                     </div>
                     <div class="col text-right">
-                        <a href="javascript:;" id="resetPw" class="align-self-end">忘记密码</a>
+                      <a href="javascript:;" id="resetPw" class="align-self-end">忘记密码</a>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="form-group login-submit">
-                <button data-dismiss="modal" type="submit" class="btn btn-primary btn-xl btn-block" id="login">
+                <button
+                  data-dismiss="modal"
+                  type="submit"
+                  class="btn btn-primary btn-xl btn-block"
+                  id="login"
+                >
                   立即登录
                 </button>
               </div>
             </form>
-            <footer class="page-copyright text-center ">
+            <footer class="page-copyright text-center">
               <p>
                 &copy; xxxx有限公司
                 <br />
@@ -84,7 +100,9 @@
             />
           </div>
           <div class="form-group text-center code-tips-hook" style="display: none">
-            <span class="label label-warning">验证码已发送到您尾号为 <b class="">0101</b> 的手机</span>
+            <span class="label label-warning"
+              >验证码已发送到您尾号为 <b class="">0101</b> 的手机</span
+            >
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -101,7 +119,12 @@
             </div>
           </div>
           <div class="form-group col-xs-12">
-            <input type="password" class="form-control input-xs text-center" name="resetPw" placeholder="设置新密码" />
+            <input
+              type="password"
+              class="form-control input-xs text-center"
+              name="resetPw"
+              placeholder="设置新密码"
+            />
           </div>
           <div class="form-group col-xs-12">
             <input
@@ -113,7 +136,7 @@
           </div>
           <div class="form-group col-xs-12">
             <div class="text-center">
-              <div class="btn  btn-primary  reset-submit-hook">确认 </div>
+              <div class="btn btn-primary reset-submit-hook">确认</div>
             </div>
           </div>
         </div>
