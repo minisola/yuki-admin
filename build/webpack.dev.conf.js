@@ -22,8 +22,14 @@ const webpackConfigDev = {
 		// stats: "errors-only", //stats: "errors-only"表示只打印错误：
 		//服务器代理配置项
         proxy: {
-            '/api': {
+            '/z': {
                 target: 'http://it.cata-log.cn:9016',
+                secure: true,
+				changeOrigin: true,
+				pathRewrite: {'^/z' : ''}
+			},
+			'/api': {
+                target: 'https://mockapi.eolinker.com/Y2FltDXde03fdd4cdaf1744e7664ec3a42de0faf6cfb96b',
                 secure: true,
 				changeOrigin: true,
 				pathRewrite: {'^/api' : ''}

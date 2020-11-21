@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title></title>
+  </head>
+  <body>
+    <div class="z-app">
+      <nav class="z-top-header" flex="main:justify">
+        <div class="app-info-section">
+          <div class="app-menu-switch">
+            <i class="header-menu"></i>
+          </div>
+          <div class="app-logo no-select" href="javascript:;">YukiAdmin</div>
+          <div class="app-module-list"></div>
+        </div>
+
+        <div flex="main:center cross:center">
+          <div>
+            <img src="/assets/images/admin.png" alt="Avatar" />
+            <span class="user-name">admin</span>
+          </div>
+          <ul role="menu" class="" style="display: none">
+            <li>
+              <div class="user-info">
+                <div class="tenantry-name">admin</div>
+                <!--<div class="user-position online">管理员</div>-->
+              </div>
+            </li>
+            <li>
+              <a href="javascript:;" class="changePw-hook"
+                ><span class="icon mdi mdi-lock-outline"></span> 修改密码</a
+              >
+            </li>
+            <li>
+              <a href="javascript:;" class="logout-hook"
+                ><span class="icon mdi mdi-power"></span> 安全退出</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="app-sider">
+        <div class="app-sider-name"></div>
+        <div class="left-sidebar-scroll">
+          <div class="sider-menu layui-anim"></div>
+        </div>
+      </div>
+      <!--主体框架-->
+      <div class="app-main">
+        <!--顶部tab条-->
+        <div class="app-top">
+          <div class="tags-scroll-left-btn">
+            <i class="fas fa-angle-left"></i>
+          </div>
+          <div class="tags-scroll-right-btn">
+            <i class="fas fa-angle-right"></i>
+          </div>
+          <div class="tags-controll">
+            <div class="tags-controll-group">
+              <button
+                type="button"
+                data-toggle="dropdown"
+                class="btn btn-primary btn-sm dropdown-toggle"
+                aria-expanded="false"
+              >
+                标签操作 <span class="icon-dropdown"></span>
+              </button>
+              <ul role="menu" class="dropdown-menu">
+                <li><a href="javascript:;" class="tags-controll-refresh">刷新当前标签页</a></li>
+                <li><a href="javascript:;" class="tags-controll-closeOthers">关闭其他标签页</a></li>
+                <li><a href="javascript:;" class="tags-controll-closeAll">关闭所有标签页</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="tags-con">
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div
+                  class="tags-item tags-item-fixed active"
+                  id="tab_-1"
+                  data-id="-1"
+                  data-title="首页"
+                >
+                  <span class="tag-circle"></span>首页
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--frame框架-->
+        <div class="app-frame">
+          <iframe
+            class="app-frame-hook app-frame-fixed"
+            id="frame_-1"
+            data-id="-1"
+            data-title="首页"
+            src=""
+            frameborder="0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="dialog-hide">
+      <div class="changePw-dialog-hook">
+        <div class="col-sm-12">
+          <form
+            action="#"
+            onsubmit="return false"
+            class="form-horizontal group-border-dashed p10 layui-form"
+          >
+            <div
+              role="alert"
+              class="alert alert-warning alert-icon alert-icon-border alert-dismissible tipsTitle mb0"
+            >
+              <div class="icon"><span class="mdi mdi-alert-triangle"></span></div>
+              <div class="message">
+                <div id="pwTipsContent"></div>
+                <b class="text-dark"
+                  >密码应为6-16位字符，至少包含数字、大写字母、小写字母、特殊字符中的三种类型</b
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 col-sm-offset-1 control-label">旧密码</label>
+              <div class="col-sm-6">
+                <input
+                  type="password"
+                  name="oldpwd"
+                  lay-verify="required"
+                  autocomplete="off"
+                  placeholder="请输入旧密码"
+                  autocomplete="off"
+                  class="form-control input-xs"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 col-sm-offset-1 control-label">新密码</label>
+              <div class="col-sm-6">
+                <input
+                  type="password"
+                  name="newpwd"
+                  lay-verify="required|pass"
+                  placeholder="请输入新密码"
+                  autocomplete="off"
+                  class="form-control input-xs"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 col-sm-offset-1 control-label">确认新密码</label>
+              <div class="col-sm-6">
+                <input
+                  type="password"
+                  name="renewpwd"
+                  lay-verify="required|pass|reInput|sameInput"
+                  autocomplete="off"
+                  placeholder="请再次输入新密码"
+                  class="form-control input-xs"
+                />
+              </div>
+            </div>
+            <div class="text-center mb10">
+              <button class="btn btn-primary" lay-submit lay-filter="changePwSubmit">
+                确认修改
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
+    <script src="//at.alicdn.com/t/font_841156_uw7o0zh1sn.js"></script>
+  </body>
+</html>

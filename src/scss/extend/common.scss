@@ -1,0 +1,40 @@
+.box-shadow {
+  box-shadow: 0 2px 6px 0 #dfe3eb;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.text-underlined {
+  text-decoration: underline;
+}
+
+.show-pointer {
+  cursor: pointer;
+}
+.show-arrow {
+  cursor: default;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.relative {
+  position: relative;
+}
+.no-select {
+  user-select: none;
+}

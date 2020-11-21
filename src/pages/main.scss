@@ -1,0 +1,500 @@
+@import '~@/scss/variables.scss';
+
+.z-top-header {
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  min-width: 1120px;
+  padding: 0 15px;
+  box-shadow: 0 2px 6px 0 #dfe3eb;
+  .user-info-group {
+    height: 64px;
+    line-height: 64px;
+    float: right;
+    .dropdown-toggle {
+      height: 64px;
+      line-height: 64px;
+    }
+    .dropdown-menu {
+      left: auto;
+      z-index: 9;
+      top: 55px !important;
+    }
+  }
+  .app-icons-nav {
+    height: 64px;
+    a {
+      padding: 10px;
+      font-size: 30px;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+.header-menu {
+  width: 25px;
+  height: 2px;
+  border-radius: 2px;
+  background: #bbb;
+  position: relative;
+}
+.header-menu:before {
+  position: absolute;
+  content: '';
+  top: -7px;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border-radius: 2px;
+  background: #bbb;
+}
+.header-menu:after {
+  position: absolute;
+  content: '';
+  bottom: -7px;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border-radius: 2px;
+  background: #bbb;
+}
+.z-app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  &.zl-mini {
+    .app-sider {
+      width: 48px;
+      .sider-menu {
+        top: 0;
+        transition: all 0.2s;
+        .icon {
+          margin-right: 0;
+          vertical-align: 1em;
+        }
+      }
+    }
+    .app-main {
+      left: 48px;
+    }
+    .app-menu-switch {
+      i {
+        color: #f1f1f1;
+        transform: rotate(90deg);
+      }
+    }
+    .app-sider-name {
+      height: 0;
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+    .sider-item {
+      a {
+        padding: 0;
+        line-height: 48px;
+        text-align: center;
+        i {
+          position: relative;
+          top: 15px;
+        }
+      }
+      span {
+        display: none;
+      }
+      .sider-arrow {
+        display: none;
+      }
+    }
+  }
+}
+//顶部菜单条
+.z-top-nav {
+  .navbar-nav {
+    flex: 1;
+    max-width: 130px;
+  }
+  .app-info-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    .app-logo {
+      flex-shrink: 0;
+    }
+    .app-module-list {
+      overflow: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+//菜单切换
+.app-menu-switch {
+  float: left;
+  height: 64px;
+  padding: 0 5px;
+  line-height: 64px !important;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+
+  &:hover i {
+    color: #ccc;
+  }
+  i {
+    padding: 0 15px 0 0;
+    border-right: 1px solid #eee;
+    color: #aaa;
+    display: inline-block;
+    line-height: 30px !important;
+    font-size: 30px;
+    vertical-align: middle;
+    transition: all 0.2s;
+  }
+}
+.app-module {
+  &-list {
+    white-space: nowrap;
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 6px;
+      background-color: #ddd;
+    }
+  }
+  padding: 5px 15px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  color: #777;
+  font-size: 18px;
+  line-height: 30px;
+  height: 40px;
+  margin: 0 5px 0 5px;
+  user-select: none;
+  &.active {
+    color: #fff !important;
+    background-image: linear-gradient(to bottom, #4cc4ff, #4ca6ff) !important;
+  }
+  .dropdown-menu {
+    margin-top: -5px;
+  }
+  &:hover {
+    cursor: pointer;
+    color: #333;
+    background: lighten(#ebeff5, 1%);
+  }
+}
+//左侧菜单
+.app-sider {
+  width: 230px;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  transition: all 0.2s;
+  z-index: 1;
+  &-name {
+    color: #fff;
+    background-image: linear-gradient(to right, #4cc4ff, #4ca6ff);
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+  }
+  .sider-menu {
+    position: absolute;
+    top: 40px;
+    box-shadow: 0 0 12px 0 rgba(100, 100, 100, 0.1);
+    z-index: 9;
+    width: 100%;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      display: block;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .sider-item {
+      &.sider-child .menu-item {
+        cursor: pointer;
+        padding-left: 45px;
+      }
+      &.sider-child.active {
+        .menu-item {
+          background-image: linear-gradient(to right, #4cc4ff, #4ca6ff);
+          color: #fff;
+          opacity: 1;
+        }
+      }
+      & > .menu-item {
+        cursor: default;
+        &:hover {
+          color: #333;
+          opacity: 1;
+        }
+      }
+    }
+    .sider-child {
+      background: #fafafa;
+    }
+    .menu-item {
+      padding: 14px 10px 14px 14px;
+      color: #444;
+      font-size: 14px;
+      height: 48px;
+      line-height: 20px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      position: relative;
+      opacity: 0.8;
+    }
+    .icon {
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      margin-right: 5px;
+      vertical-align: -0.16em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+    .sider-dropmenu {
+      .sider-arrow {
+        transition: all 0.2s;
+        text-align: center;
+        color: #aaa;
+      }
+      &.active {
+        .sider-arrow {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    .sider-dropmenu-box {
+      &.active {
+        display: block;
+      }
+      li {
+        border-bottom: none;
+      }
+    }
+    i.sider-arrow {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      top: 14px;
+      right: 11px;
+      line-height: 20px;
+      font-size: 20px !important;
+    }
+    .sider-dropmenu-box {
+      display: none;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 6px;
+      background-color: #ddd;
+    }
+  }
+}
+
+.app-logo {
+  float: left;
+  height: 64px;
+  line-height: 64px;
+  padding: 0 10px;
+  font-size: 28px;
+  color: #333;
+  &:hover {
+    color: #333;
+  }
+  img {
+    margin: -4px 10px 0 15px;
+    max-height: 45px;
+  }
+}
+
+//右侧上部tabs页
+.app-top {
+  background: #f9f9f9;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  box-shadow: 0 2px 5px 1px rgba(100, 100, 100, 0.1);
+
+  * {
+    user-select: none;
+  }
+}
+//右侧框体frame
+.app-frame {
+  position: absolute;
+  top: 41px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 0;
+  overflow: auto;
+  iframe {
+    position: absolute;
+    width: 100%;
+    min-width: 1000px;
+    height: 100%;
+    overflow: auto;
+  }
+}
+//tabs导航栏
+.tags-con {
+  height: 40px;
+  left: 32px;
+  right: 152px;
+  position: absolute;
+  overflow: hidden;
+  font-size: 0;
+  .tags-item {
+    height: 32px;
+    line-height: 25px;
+    border: 1px solid #e3e8ee;
+    color: #657180;
+    background: #fff;
+    padding: 0 5px 0 12px;
+    display: inline-block;
+    margin: 4px 0 2px 0;
+    border-radius: 3px;
+    font-size: 13px;
+    opacity: 0.9;
+    white-space: nowrap;
+    cursor: pointer;
+    &:first-of-type {
+      margin-left: 5px;
+      line-height: 30px;
+      padding: 0 12px;
+    }
+    .tag-circle {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+      background: #e3e8ee;
+    }
+    i {
+      position: relative;
+      font-style: normal;
+      top: 2px;
+      font-size: 20px;
+      opacity: 0.6;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    &:hover {
+      color: #333;
+      box-shadow: none;
+      opacity: 0.6;
+    }
+    &.active {
+      opacity: 1;
+      background: #fff;
+      z-index: 2;
+      color: #333;
+      .tag-circle {
+        background: $primary-color;
+      }
+    }
+  }
+}
+.tags-scroll-right-btn {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  right: 120px;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+  border-right: 1px solid #f1f1f1;
+  box-shadow: -2px 0 5px -1px #eee;
+  z-index: 3;
+  color: #999;
+  font-size: 14px;
+  &:focus,
+  &:active {
+    opacity: 0.3;
+  }
+}
+.tags-scroll-left-btn {
+  background: #fff;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+  line-height: 40px;
+  box-shadow: 2px 0 5px -1px #eee;
+  z-index: 3;
+  color: #999;
+  font-size: 14px;
+  &:focus,
+  &:active {
+    opacity: 0.3;
+  }
+}
+.tags-controll {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 40px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+  z-index: 3;
+  background: #fff;
+  .dropdown-menu {
+    min-width: 100px;
+    left: -26px;
+    top: 30px;
+  }
+  button {
+    margin-bottom: 3px;
+  }
+}
+//右侧
+.app-main {
+  position: fixed;
+  top: 64px;
+  left: 230px;
+  bottom: 0;
+  overflow: hidden;
+  right: 0;
+  transition: all 0.2s;
+}
