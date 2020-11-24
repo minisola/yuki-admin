@@ -1,6 +1,6 @@
 @import '~@/scss/variables.scss';
 
-.z-top-header {
+.yuki-top-header {
   background: #fff;
   position: fixed;
   width: 100%;
@@ -65,14 +65,14 @@
   border-radius: 2px;
   background: #bbb;
 }
-.z-app {
+.yuki-app {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: auto;
-  &.zl-mini {
+  &.mode-mini {
     .app-sider {
       width: 48px;
       .sider-menu {
@@ -118,7 +118,7 @@
   }
 }
 //顶部菜单条
-.z-top-nav {
+.yuki-top-nav {
   .navbar-nav {
     flex: 1;
     max-width: 130px;

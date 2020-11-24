@@ -1,10 +1,8 @@
 import { pageInit } from '@/common/init'
 import router from '@/common/router'
-import { hex_md5 } from '@/libs/md5/md5.js'
 import Swiper from '@/libs/swiper/js/swiper.jquery.js'
+import md5 from 'md5'
 import './main.scss'
-
-// import '@/libs/bootstrap-3.3.7/js/bootstrap.min.js'
 
 pageInit()
 window.onload = function () {
@@ -32,17 +30,17 @@ window.onload = function () {
   window.addNavTab = function (id, title, url) {
     let params = ''
 
-    if (url.indexOf('?') > -1) {
-      params = '&menu=' + id
-    } else {
-      params = '?menu=' + id
-    }
+    // if (url.indexOf('?') > -1) {
+    //   params = '&menu=' + id
+    // } else {
+    //   params = '?menu=' + id
+    // }
 
     //如果是我要找车.途视宝则打开新页面
-    if (id == 5 || id == 6 || id == 87) {
-      window.open(url + params)
-      return
-    }
+    // if (id == 5 || id == 6 || id == 87) {
+    //   window.open(url + params)
+    //   return
+    // }
 
     const $tab = $('#tab_' + id)
     if ($tab.length && id.toString().indexOf('custom') > -1) {
@@ -159,11 +157,10 @@ window.onload = function () {
   if (!user) location.href = window.env.appUrl
   user = JSON.parse(user)
   $('.user-name').text(user.authUser.userName)
-  $('.tenantry-name').text(user.authUser.tenantryName)
   $('.app-logo').text(user.authUser.tenantryName)
 
   //菜单
-  const menu = user.menu._menus
+  const { menu = [] } = user
 
   //监听菜单切换
   $(document).on('click', '.app-module', function () {
@@ -187,7 +184,7 @@ window.onload = function () {
       '                </div>'
   })
   moduleMenu.html(moduleMenuHtml)
-  moduleMenu.find('.app-module').eq(1).click()
+  moduleMenu.find('.app-module').eq(0).click()
 
   //切换模块菜单
   function moduleSwitch(id, name) {
@@ -210,23 +207,23 @@ window.onload = function () {
     addNavTab(id, title, path)
   })
   //监听侧栏按钮触摸事件
-  $(doc).on('mouseenter', '.zl-mini .sider-item', function () {
+  $(doc).on('mouseenter', '.mode-mini .sider-item', function () {
     var name = $(this).find('span').text()
     miniTips = layer.tips(name, this)
   })
-  $(doc).on('mouseleave', '.zl-mini .sider-item', function () {
+  $(doc).on('mouseleave', '.mode-mini .sider-item', function () {
     layer.close(miniTips)
   })
 
   //监听菜单栏切换按钮
   $(doc).on('click', '.app-menu-switch', function () {
-    var $app = $('.zl-app')
-    if ($app.hasClass('zl-mini')) {
-      $app.removeClass('zl-mini')
+    var $app = $('.yuki-app')
+    if ($app.hasClass('mode-mini')) {
+      $app.removeClass('mode-mini')
       localStorage.menu_mode = 'lg'
       $('.sider-dropmenu,.sider-dropmenu-box').addClass('active')
     } else {
-      $app.addClass('zl-mini')
+      $app.addClass('mode-mini')
       localStorage.menu_mode = 'xs'
       $('.sider-dropmenu,.sider-dropmenu-box').removeClass('active')
     }
@@ -298,7 +295,7 @@ window.onload = function () {
   //一级菜单最小化点击
   $(doc).on('click', '.sider-dropmenu', function () {
     layer.close(miniTips)
-    $('.zl-app').removeClass('zl-mini')
+    $('.zl-app').removeClass('mode-mini')
     $('.sider-dropmenu-box').addClass('active')
   })
 
@@ -336,8 +333,8 @@ window.onload = function () {
         $.post(
           window.env.apiUrl + '/changePwd',
           {
-            oldPwd: hex_md5(field.oldpwd),
-            newPwd: hex_md5(field.renewpwd),
+            oldPwd: md5(field.oldpwd),
+            newPwd: md5(field.renewpwd),
           },
           function (result) {
             if (result.code == 1) {
@@ -368,23 +365,6 @@ window.onload = function () {
       })
     })
   })
-
-  //当密码是初始密码时修改密码
-  if (user.pwdFlag == 1) {
-    $('.tipsTitle').show()
-    $('#pwTipsContent').html('您的密码为初始密码,请及时修改密码').show()
-    window.cflag = 0
-    $('.changePw-hook').click()
-  } else if (1 == localStorage.isSimple) {
-    //如果是简单的密码
-    window.cflag = 0
-    $('.tipsTitle').show()
-    $('#pwTipsContent').html('您的密码为简单密码<br>请及时修改为更安全的密码组合').show()
-    $('.changePw-hook').click()
-    $('.layui-layer-setwin').remove()
-  } else {
-    $('#pwTipsContent').hide()
-  }
 
   /*
    * @description 左侧菜单渲染
@@ -447,10 +427,10 @@ window.onload = function () {
       .removeClass('layui-anim-upbit')
       .hide(200, function () {
         $(this).addClass('layui-anim-upbit').html(html).show()
-        openFirtPage()
+        // openFirtPage()
         //读取缓存是否是mini模式
-        if (localStorage.menu_mode == 'xs' && !$('.zl-mini').length) {
-          $('.zl-app').addClass('zl-mini')
+        if (localStorage.menu_mode == 'xs' && !$('.mode-mini').length) {
+          $('.zl-app').addClass('mode-mini')
         }
         if (localStorage.menu_mode == 'xs') {
           $('.sider-dropmenu,.sider-dropmenu-box').removeClass('active')
@@ -459,15 +439,15 @@ window.onload = function () {
   }
 
   //初始化后打开的第一个页面
-  function openFirtPage() {
-    if (initFirtPage) return
-    initFirtPage = 1
-    if ($('#sider_btn_13').length) {
-      setTimeout(function () {
-        $('#sider_btn_13').trigger('click')
-      }, 0)
-    } else {
-      $('.sider-item.sider-child a').eq(0).trigger('click')
-    }
-  }
+  // function openFirtPage() {
+  //   if (initFirtPage) return
+  //   initFirtPage = 1
+  //   if ($('#sider_btn_13').length) {
+  //     setTimeout(function () {
+  //       $('#sider_btn_13').trigger('click')
+  //     }, 0)
+  //   } else {
+  //     $('.sider-item.sider-child a').eq(0).trigger('click')
+  //   }
+  // }
 }

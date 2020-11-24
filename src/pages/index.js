@@ -31,7 +31,6 @@ $(function () {
   function loginFun() {
     var account = $('#account').val()
     var pwd = $('#pwd').val()
-    // var flag = 1;
     if (account == '') {
       showError('用户名不能为空')
       return
@@ -41,12 +40,6 @@ $(function () {
       return
     }
 
-    if (_u.validateReg.strongPwd.test(pwd)) {
-      //如果是 满足要求的密码,传0
-      localStorage.isSimple = 0
-    } else {
-      localStorage.isSimple = 1
-    }
     window.loading = layer.msg('登录中...', { icon: 16, time: 0, shade: [0.3, '#000'] })
     $.ajax({
       type: 'POST',
@@ -63,7 +56,7 @@ $(function () {
             localStorage.setItem('account', '')
           }
           localStorage.setItem('token', res.data.token)
-          localStorage.setItem('user', JSON.stringify(res.data))
+          localStorage.setItem('user', JSON.stringify(res.data.user))
           location.href = '/pages/main.html'
         })
       },
