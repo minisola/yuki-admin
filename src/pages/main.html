@@ -20,29 +20,19 @@
           <div class="app-module-list"></div>
         </div>
 
-        <div flex="main:center cross:center">
+        <div flex="main:center cross:center" class="user-info">
           <div>
             <img src="/assets/images/admin.png" alt="Avatar" />
             <span class="user-name">admin</span>
           </div>
-          <ul role="menu" class="" style="display: none">
-            <li>
-              <div class="user-info">
-                <div class="tenantry-name">admin</div>
-                <!--<div class="user-position online">管理员</div>-->
-              </div>
-            </li>
-            <li>
-              <a href="javascript:;" class="changePw-hook"
-                ><span class="icon mdi mdi-lock-outline"></span> 修改密码</a
-              >
-            </li>
-            <li>
-              <a href="javascript:;" class="logout-hook"
-                ><span class="icon mdi mdi-power"></span> 安全退出</a
-              >
-            </li>
-          </ul>
+          <div class="dropdown-menu user-dropmenu" style="display: none">
+            <a href="javascript:;" class="dropdown-item changePw-hook">
+              <span class="icon mdi mdi-lock-outline"></span> 修改密码
+            </a>
+            <a href="javascript:;" class="dropdown-item logout-hook">
+              <span class="icon mdi mdi-power"></span> 安全退出
+            </a>
+          </div>
         </div>
       </nav>
       <div class="app-sider">

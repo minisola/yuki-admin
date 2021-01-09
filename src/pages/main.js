@@ -43,14 +43,17 @@ window.onload = function () {
     // }
 
     const $tab = $('#tab_' + id)
-    if ($tab.length && id.toString().indexOf('custom') > -1) {
-      _u.zlmsg.fail('已有运单正在编辑,请关闭或保存后再试')
-      $tab.click()
-      return
-    } else if ($tab.length) {
-      $tab.click()
-      return
-    }
+    // if ($tab.length && id.toString().indexOf('custom') > -1) {
+    //   _u.zlmsg.fail('已有运单正在编辑,请关闭或保存后再试')
+    //   $tab.click()
+    //   return
+    // } else if ($tab.length) {
+    //   $tab.click()
+    //   return
+    // }
+
+    if ($tab.length) return $tab.trigger('click')
+
     navSwiper.appendSlide([
       '<div class="tags-item layui-anim layui-anim-upbit"  id="tab_' +
         id +
@@ -230,13 +233,13 @@ window.onload = function () {
   })
 
   //监听开启关闭用户下拉菜单
-  $(doc).on('mouseover', '.user-info-group', function () {
-    var menuInfo = $('.user-info-group')
-    menuInfo.addClass('open')
+  $(doc).on('mouseover', '.user-info', function () {
+    var menuInfo = $('.user-info')
+    menuInfo.find('.user-dropmenu').slideDown(200)
   })
-  $(doc).on('mouseleave', '.user-info-group', function () {
-    var menuInfo = $('.user-info-group')
-    menuInfo.removeClass('open')
+  $(doc).on('mouseleave', '.user-info', function () {
+    var menuInfo = $('.user-info')
+    menuInfo.find('.user-dropmenu').slideUp(200)
   })
   // //监听开启关闭标签操作菜单
   $(doc).on('mouseover', '.tags-controll-group', function () {
